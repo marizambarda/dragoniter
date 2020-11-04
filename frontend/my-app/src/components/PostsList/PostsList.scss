@@ -1,0 +1,16 @@
+.postsList{
+  border-top: 1px solid #ccc;
+  padding: 10px 20px;
+}
+.userNamePostTimeline{
+  font-size: 18px;
+  font-weight: bold;
+}
+.userNamePostTimeline a{
+  color: #000;
+
+  &:hover{
+    text-decoration: none;
+    color: #00acee;
+  }
+}
