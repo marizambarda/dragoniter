@@ -21,7 +21,6 @@ function CreatePostForm({loggedUser, defaultText, buttonText}){
         access_token: localStorage.getItem("access_token")
       }
     })
-    setPostBody("");
     window.location.reload();
   }
   return(
@@ -32,7 +31,7 @@ function CreatePostForm({loggedUser, defaultText, buttonText}){
             className="texteareaTimeline"
             as="textarea" 
             ref={autoFocus}
-            placeholder={"No que você está pensando, " + (loggedUser ? loggedUser.name : "") + " ?"} 
+            placeholder={"No que você está pensando, " + (loggedUser ? loggedUser.name : "") + "?"} 
             value={postBody} 
             onChange={e => setPostBody(e.target.value)}
             rows={3} 

@@ -73,6 +73,9 @@ function PostBody({body}){
 
     if(word[0] === "@"){
       returnedWord = <Link className="linkMentionUser" to={`/${word.substr(1)}`}>{word}</Link>
+    } 
+    else if(word[0] === "#"){
+      returnedWord = <Link className="linkMentionUser" to={`/hashtags/${word.substr(1)}`}>{word}</Link>
     } else{
       returnedWord = word
     }

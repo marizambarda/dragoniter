@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
 import PageWithMenu from "../../components/PageWithMenu";
 import axios from "axios";
 import PostsList from "../../components/PostsList/PostsList";
 import "./MentionsPage.scss";
-//import PostsList from "../../components/PostsList/PostsList";
 
 function MentionsPage({loggedUser}){
   const [posts, setPosts] =  useState([])

@@ -9,13 +9,14 @@ import LoginPage from "./pages/LoginPage";
 import TimelinePage from "./pages/TimelinePage";
 import ProfilePage from "./pages/ProfilePage";
 import MentionsPage from "./pages/MentionsPage";
-
+import HashtagsPage from "./pages/HashtagsPage";
 
 
 
 // Dependencies
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("access_token") !== null)
@@ -52,6 +53,9 @@ function App() {
           </Route>
           <Route path="/mentions">
             <MentionsPage loggedUser={loggedUser}/>
+          </Route>
+          <Route path="/hashtags/:hashtag">
+            <HashtagsPage loggedUser={loggedUser}/>
           </Route>
           <Route path="/:nickname">
             <ProfilePage loggedUser={loggedUser} />
