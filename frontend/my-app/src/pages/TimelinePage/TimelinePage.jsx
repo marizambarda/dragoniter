@@ -35,7 +35,9 @@ function TimelinePage({loggedUser}){
   return(
     <div className="timelinePage">
       <PageWithMenu loggedUser={loggedUser}>
-        <CreatePostForm loggedUser={loggedUser} />
+        <div class="createPostFormContainer">
+          <CreatePostForm loggedUser={loggedUser} defaultText={""} buttonText={"Twittar"}/>
+        </div>
         <PostsList posts={posts} loggedUser={loggedUser}/>
       </PageWithMenu>
     </div>

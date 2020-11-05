@@ -1,7 +1,17 @@
-.postsList{
+.postsList .post{
   border-top: 1px solid #ccc;
   padding: 10px 20px;
+  display: flex;
 
+  .postAvatar img{
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    margin-right: 10px;
+  }
+  .postContent{
+    flex-grow: 1;
+  }
   .userNamePostTimeline{
     font-size: 18px;
     font-weight: bold;
@@ -14,8 +24,16 @@
       color: #00acee;
     }
   }
+  .timelineUserNickname{
+    padding-top: 0px;
+    font-size: 14px;
+    font-weight: none;
+    color: rgb(194, 191, 191);
+  }
   .btnDeletePost{
     float: right;
     margin-top: 8px;
+    
   }
+
 }

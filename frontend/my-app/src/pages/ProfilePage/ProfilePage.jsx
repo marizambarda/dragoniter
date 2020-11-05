@@ -92,7 +92,7 @@ function ProfileHeaderCover ({ user, isMe }) {
   )
 }
 
-function ProfileHeaderAvatar ({ user, isMe }) {
+function ProfileHeaderAvatar ({ user, isMe, loggedUser }) {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
 
   return (

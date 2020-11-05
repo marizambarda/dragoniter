@@ -33,9 +33,12 @@ function LoggedInMenu ({ loggedUser }) {
 
   return (
     <>
-      <Image className="perfilImage" src={loggedUser.avatar_url} roundedCircle />
+      <Link to={`/${loggedUser.nickname}`}><Image className="perfilImage" src={loggedUser.avatar_url} roundedCircle /></Link>
       <Row>
         <Col><Link to={"/"}>Página Inicial</Link></Col>
+      </Row>
+      <Row>
+        <Col><Link to={`/mentions`}>Menções</Link></Col>
       </Row>
       <Row>
         <Col><Link to={`/${loggedUser.nickname}`}>Perfil</Link></Col>

@@ -8,6 +8,8 @@ import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import TimelinePage from "./pages/TimelinePage";
 import ProfilePage from "./pages/ProfilePage";
+import MentionsPage from "./pages/MentionsPage";
+
 
 
 
@@ -48,9 +50,13 @@ function App() {
           <Route path="/users/signup">
             <SignUpPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />
           </Route>
+          <Route path="/mentions">
+            <MentionsPage loggedUser={loggedUser}/>
+          </Route>
           <Route path="/:nickname">
             <ProfilePage loggedUser={loggedUser} />
           </Route> 
+          
         </Switch>
       </Router>
       
