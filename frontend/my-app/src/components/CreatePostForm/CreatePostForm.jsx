@@ -14,7 +14,7 @@ function CreatePostForm({loggedUser, defaultText, buttonText}){
 
   async function formSubmited(e){
     e.preventDefault()
-    const response = await axios.post(`http://localhost:9000/posts`, {
+    await axios.post(`http://localhost:9000/posts`, {
       body: postBody
     }, {
       headers: {

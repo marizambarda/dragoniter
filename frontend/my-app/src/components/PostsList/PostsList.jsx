@@ -52,8 +52,8 @@ function Post({post, loggedUser}){
         <div className="userNamePostTimeline">
           <Link to={`/${post.nickname}`}>{post.name} <span className="timelineUserNickname"> @{post.nickname}</span> </Link> 
         </div>
-        <div>{post.body}</div>
-        <a href="#" onClick={toggleReplyForm}><FontAwesomeIcon icon={faCommentDots} /></a>
+        <div><PostBody body={post.body}/></div>
+        <a href="#" className="replyIcon" onClick={toggleReplyForm}><FontAwesomeIcon icon={faCommentDots} /></a>
         {
           reply === true &&(
             <CreatePostForm defaultText={ `@${post.nickname} ` } buttonText={"Responder"} />
@@ -63,6 +63,22 @@ function Post({post, loggedUser}){
     </div>
         
   )
+}
+
+function PostBody({body}){
+  const words = body.split(" ")
+
+  return words.map(word => {
+    let returnedWord
+
+    if(word[0] === "@"){
+      returnedWord = <Link className="linkMentionUser" to={`/${word.substr(1)}`}>{word}</Link>
+    } else{
+      returnedWord = word
+    }
+    
+    return <>{returnedWord}{' '}</>
+  })
 }
 
 export default PostsList;

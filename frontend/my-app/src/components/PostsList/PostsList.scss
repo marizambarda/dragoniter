@@ -35,5 +35,20 @@
     margin-top: 8px;
     
   }
+  .linkMentionUser{
+    color: #00acee;
+    text-decoration: none;
+
+    &:hover{
+      color:  darken(#00acee, 10%);
+    }
+  }
+  .replyIcon{
+    color: #ccd0d3;
+
+    &:hover{
+      color: #aeaeaf ;
+    }
+  }
 
 }
