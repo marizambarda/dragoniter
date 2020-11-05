@@ -36,7 +36,7 @@ function TimelinePage({loggedUser}){
     <div className="timelinePage">
       <PageWithMenu loggedUser={loggedUser}>
         <CreatePostForm loggedUser={loggedUser} />
-        <PostsList posts={posts}/>
+        <PostsList posts={posts} loggedUser={loggedUser}/>
       </PageWithMenu>
     </div>
   )

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImages } from '@fortawesome/free-solid-svg-icons' 
 import axios from "axios";
 
 function ImageUploadModal({show, handleClose, userFieldName}){

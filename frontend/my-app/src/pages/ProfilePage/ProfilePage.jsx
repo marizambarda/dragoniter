@@ -45,7 +45,7 @@ function ProfilePage({loggedUser}){
     <div className="profilePage">
       <PageWithMenu loggedUser={loggedUser}>
         <ProfileHeader user={user} loggedUser={loggedUser}/>
-        <PostsList posts={posts}/>
+        <PostsList posts={posts} loggedUser={loggedUser}/>
       </PageWithMenu>
     </div>
   )
