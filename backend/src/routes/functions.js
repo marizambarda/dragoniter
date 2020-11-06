@@ -3,9 +3,16 @@ function validateEmail(email){
   return emailRegexp.test(email);
 }
 
-module.exports = {
-  validateEmail
+function validateNickname(nickname){
+  const nicknameRegexp = /^[0-9a-zA-Z_]+$/
+  return nicknameRegexp.test(nickname);
 }
+
+module.exports = {
+  validateEmail,
+  validateNickname
+}
+
 
 
 

@@ -1,9 +1,9 @@
-const db = require('../db')
-const express = require('express')
-const {validateEmail} = require("./functions")
-const router = express.Router() 
+const db = require('../db');
+const express = require('express');
+const { validateEmail, validateNickname } = require("./functions");
+const router = express.Router();
 const { uuid } = require('uuidv4');
-const _ = require("lodash")
+const _ = require("lodash");
 
 const { catchAsyncErrorsOnRouter } = require('express-async-await-errors');
 const { allowAuthentication, requireAuthentication } = require('../middlewares');
@@ -11,6 +11,16 @@ catchAsyncErrorsOnRouter(router)
 
 
 router.post('/users', async function (req, res){
+  if(req.body.name.length > 40){
+    res.status(400)
+    res.json({error: "Nome muito grande, use no máximo 40 caracteres!"})
+    return
+  }
+  if(req.body.name.length < 2){
+    res.status(400)
+    res.json({error: "Nome muito pequeno, use no minímo 2 caracteres!"})
+    return
+  }
   if(validateEmail(req.body.email) === false){
     res.status(400)
     res.json({error: "Email inválido!"})
@@ -23,18 +33,34 @@ router.post('/users', async function (req, res){
     res.json({error: "Este email já está em uso!"})
     return
   }
+
   const [usersWithNickname] = await db.query('SELECT * FROM users WHERE nickname = ?', [req.body.nickname])
   if(usersWithNickname.length > 0){
     res.status(400)
     res.json({error: "Este nome de usuário já está em uso!"})
     return
   }
+  if(validateNickname(req.body.nickname) === false){
+    res.status(400)
+    res.json({error: "Nome de usuário inválido, utilize apenas letras (a-z ou A-Z), números e underline (_)"})
+    return
+  }
+  if(req.body.nickname.length < 5){
+    res.status(400)
+    res.json({error: "Nome de usuário muito pequeno, use no minímo 5 caracteres!"})
+    return
+  }
+  if(req.body.nickname.length > 15){
+    res.status(400)
+    res.json({error: "Nome de usuário muito grande, use no máximo 15 caracteres!"})
+    return
+  }
+
   if(req.body.password === ""){
     res.status(400)
     res.json({Error: "Senha precisa ser preenchida!"})
     return
   }
-
   if(req.body.password.length > 40){
     res.status(400)
     res.json({error: "Senha muito grande, use no máximo 40 caracteres!"})
@@ -45,12 +71,12 @@ router.post('/users', async function (req, res){
     res.json({error: "Senha muito pequena, use no mínimo 6 caracteres!"})
     return
   }
+
   const [result] = await db.query('INSERT INTO users(name, email, nickname, password, access_token) VALUES (?, ?, ?, ?, ?)', [req.body.name, req.body.email, req.body.nickname, req.body.password, uuid()])
   const [users] = await db.query('SELECT * FROM users WHERE id = ?', [result.insertId])
   res.json(users[0])
 
 })
-
 
 router.post('/users/login', async function (req, res){
   const [users] = await db.query('SELECT * FROM users WHERE email = ? AND password = ?', [req.body.email, req.body.password])
@@ -82,19 +108,72 @@ router.get('/users/:nickname', allowAuthentication, async function (req, res){
   res.json(user)
 })
 
-router.get('/users/:nickname/posts', async function (req, res){
-  const [users] = await db.query('SELECT id FROM users WHERE nickname = ?', [req.params.nickname]) 
-  if(users.length === 0){
-    res.status(404).end()
-    return
+router.put('/me', requireAuthentication, async function(req, res){
+  const fields = _.pick(req.body, ['name', 'nickname', 'email', 'password', 'avatar_url', 'cover_url'])
+  
+  if(fields.name){
+    if(req.body.name.length > 40){
+      res.status(400)
+      res.json({error: "Nome muito grande, use no máximo 40 caracteres!"})
+      return
+    }
+    if(req.body.name.length < 2){
+      res.status(400)
+      res.json({error: "Nome muito pequeno, use no minímo 2 caracteres!"})
+      return
+    }
+  }  
+
+  if(fields.email){
+    if(validateEmail(fields.email) === false){
+      res.status(400)
+      res.json({error: "Email inválido!"})
+      return
+    }
+
+    const [usersWithEmail] = await db.query('SELECT * FROM users WHERE email = ? AND id != ?', [fields.email, req.user.id])
+    if(usersWithEmail.length > 0){
+      res.status(400)
+      res.json({error: "Este email já está em uso!"})
+      return
+    }
   }
 
-  const [posts] = await db.query('SELECT posts.*, users.name, users.nickname FROM posts INNER JOIN users ON posts.user_id = users.id WHERE user_id = ? ORDER BY created_at DESC', [ users[0].id ]) 
-  res.json(posts)
-})
-
-router.put('/me', requireAuthentication, async function(req, res){
-  const fields = _.pick(req.body, ['name', 'avatar_url', 'cover_url'])
+  if(fields.nickname){
+    const [usersWithNickname] = await db.query('SELECT * FROM users WHERE nickname = ? AND id != ?', [fields.nickname, req.user.id])
+    if(usersWithNickname.length > 0){
+      res.status(400)
+      res.json({error: "Este nome de usuário já está em uso!"})
+      return
+    }
+    if(validateNickname(req.body.nickname) === false){
+      res.status(400)
+      res.json({error: "Nome de usuário inválido, utilize apenas letras (a-z ou A-Z), números e underline (_)"})
+      return
+    }
+    if(req.body.nickname.length < 5){
+      res.status(400)
+      res.json({error: "Nome de usuário muito pequeno, use no minímo 5 caracteres!"})
+      return
+    }
+    if(req.body.nickname.length > 15){
+      res.status(400)
+      res.json({error: "Nome de usuário muito grande, use no máximo 15 caracteres!"})
+      return
+    }
+  }
+  if(fields.password){
+    if(req.body.password.length > 40){
+      res.status(400)
+      res.json({error: "Senha muito grande, use no máximo 40 caracteres!"})
+      return
+    }
+    if(req.body.password.length < 6){
+      res.status(400)
+      res.json({error: "Senha muito pequena, use no mínimo 6 caracteres!"})
+      return
+    }
+  }
   await db.query('UPDATE users SET ? WHERE id = ?', [fields, req.user.id])
   const [users] = await db.query('SELECT * FROM users WHERE id = ?', [req.user.id])
   res.json(users[0]);
