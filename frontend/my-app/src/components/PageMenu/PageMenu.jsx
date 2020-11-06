@@ -41,10 +41,10 @@ function LoggedInMenu ({ loggedUser }) {
         <Col><Link to={`/mentions`}>Menções</Link></Col>
       </Row>
       <Row>
-        <Col><Link to={`/editprofile`}>Editar Informações</Link></Col>
+        <Col><Link to={`/${loggedUser.nickname}`}>Perfil</Link></Col>
       </Row>
       <Row>
-        <Col><Link to={`/${loggedUser.nickname}`}>Perfil</Link></Col>
+        <Col><Link to={`/editprofile`}>Editar Informações</Link></Col>
       </Row>
       <Row>
         <Col><a href={`#`} onClick={logout}>Sair</a></Col>

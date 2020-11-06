@@ -3,6 +3,7 @@ import "./PostsList.scss";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button, Row, Col } from "react-bootstrap";
+import { DateTime } from 'luxon';
 import CreatePostForm from "../../components/CreatePostForm"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faCommentDots } from '@fortawesome/free-solid-svg-icons' 
@@ -39,27 +40,33 @@ function Post({post, loggedUser}){
   }
   return(
     <div className="post">
-      <Link to={`/${post.nickname}`}>
-        <div className="postAvatar">
+
+      <div className="postAvatar">
+        <Link to={`/${post.nickname}`}>
           <img src={post.avatar_url} className="rounded-circle" />
-        </div>
-      </Link>
+        </Link>
+      </div>
+      
       <div className="postContent">
-        {isMe &&(
-          <Button className="btnDeletePost" variant="light" onClick={deleteTwitte}><FontAwesomeIcon icon={faTrashAlt} /></Button>
-          )
-        }
         <div className="userNamePostTimeline">
           <Link to={`/${post.nickname}`}>{post.name} <span className="timelineUserNickname"> @{post.nickname}</span> </Link> 
         </div>
         <div><PostBody body={post.body}/></div>
+        <div className="showTime"><PostDateTime dateTime={post.created_at}/></div>
         <a href="#" className="replyIcon" onClick={toggleReplyForm}><FontAwesomeIcon icon={faCommentDots} /></a>
+        
         {
           reply === true &&(
             <CreatePostForm defaultText={ `@${post.nickname} ` } buttonText={"Responder"} />
           )
         }
       </div> 
+
+      <div>
+        {isMe && (
+          <Button className="btnDeletePost" variant="light" onClick={deleteTwitte}><FontAwesomeIcon icon={faTrashAlt} /></Button>
+        )}
+      </div>
     </div>
         
   )
@@ -82,6 +89,12 @@ function PostBody({body}){
     
     return <>{returnedWord}{' '}</>
   })
+}
+
+function PostDateTime({dateTime}){
+  const dateTimeObject = DateTime.fromISO(dateTime).setLocale('pt')
+  //return dateTimeObject.toFormat("dd/MM/yyyy 'às' HH:mm")
+  return dateTimeObject.toRelative()
 }
 
 export default PostsList;
