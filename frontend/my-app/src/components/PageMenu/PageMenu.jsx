@@ -41,6 +41,9 @@ function LoggedInMenu ({ loggedUser }) {
         <Col><Link to={`/mentions`}>Menções</Link></Col>
       </Row>
       <Row>
+        <Col><Link to={`/editprofile`}>Editar Informações</Link></Col>
+      </Row>
+      <Row>
         <Col><Link to={`/${loggedUser.nickname}`}>Perfil</Link></Col>
       </Row>
       <Row>

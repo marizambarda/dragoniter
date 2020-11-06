@@ -10,6 +10,7 @@ import TimelinePage from "./pages/TimelinePage";
 import ProfilePage from "./pages/ProfilePage";
 import MentionsPage from "./pages/MentionsPage";
 import HashtagsPage from "./pages/HashtagsPage";
+import EditSignUpPage from "./pages/EditSignUpPage";
 
 
 
@@ -51,12 +52,15 @@ function App() {
           <Route path="/users/signup">
             <SignUpPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />
           </Route>
-          <Route path="/mentions">
+          <AuthenticatedRoute path="/mentions" isLoggedIn={isLoggedIn}>
             <MentionsPage loggedUser={loggedUser}/>
-          </Route>
+          </AuthenticatedRoute>
           <Route path="/hashtags/:hashtag">
             <HashtagsPage loggedUser={loggedUser}/>
           </Route>
+          <AuthenticatedRoute path="/editprofile" isLoggedIn={isLoggedIn}>
+            <EditSignUpPage loggedUser={loggedUser} />
+          </AuthenticatedRoute> 
           <Route path="/:nickname">
             <ProfilePage loggedUser={loggedUser} />
           </Route> 
