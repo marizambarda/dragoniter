@@ -14,18 +14,11 @@ function TimelinePage({loggedUser}){
 
   useEffect(()=>{
     async function getPosts(){
-      try{
-        setIsLoading(true)
-        const response = await api.get('/posts')
-        setIsLoading(false)
+      setIsLoading(true)
+      const response = await api.get('/posts')
+      setIsLoading(false)
+      if (response.ok) {
         setPosts(response.data)
-      } 
-      catch (error){
-        if (error.response) {
-          alert(error.response.data.error)
-        } else {
-          throw error
-        }
       }
     }
     getPosts();

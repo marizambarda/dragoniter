@@ -9,7 +9,7 @@ import TimelinePage from "./pages/TimelinePage";
 import ProfilePage from "./pages/ProfilePage";
 import MentionsPage from "./pages/MentionsPage";
 import HashtagsPage from "./pages/HashtagsPage";
-import EditSignUpPage from "./pages/EditSignUpPage";
+import EditUserInformationsPage from "./pages/EditUserInformationsPage";
 import FollowingPage from "./pages/FollowingPage";
 import FollowersPage from "./pages/FollowersPage";
 import LoadingIndicator from "./components/LoadingIndicator";
@@ -60,7 +60,7 @@ function App() {
                 <HashtagsPage loggedUser={loggedUser}/>
               </Route>
               <AuthenticatedRoute path="/editprofile" isLoggedIn={isLoggedIn}>
-                <EditSignUpPage loggedUser={loggedUser} /> FollowingPage
+                <EditUserInformationsPage loggedUser={loggedUser} /> FollowingPage
               </AuthenticatedRoute> 
               <Route path="/:nickname/following">
                 <FollowingPage loggedUser={loggedUser} /> 

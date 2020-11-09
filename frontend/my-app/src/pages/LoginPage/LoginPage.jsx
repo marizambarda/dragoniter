@@ -13,23 +13,22 @@ function LoginPage({setIsLoggedIn}){
   async function formSubmitted(e){
     e.preventDefault()
 
-    try{
-      const response = await api.post(`/users/login`, {
-        email: email,
-        password: password
-      })
+    const response = await api.post(`/users/login`, {
+      email: email,
+      password: password
+    })
 
+    if (response.ok) {
       localStorage.setItem("access_token", response.data.access_token)
       setIsLoggedIn(true)
       history.push("/")
-    } catch (error){
-      if (error.response) {
-        alert(error.response.data.error)
-      } else {
-        throw error
-      }
+    } else if (response.data) {
+      alert(response.data.error)
+    } else {
+      alert('Ocorreu um erro na comunicação com o servidor.')
     }
   }
+
   return(
     <Container>
     <h1>Entrar</h1>

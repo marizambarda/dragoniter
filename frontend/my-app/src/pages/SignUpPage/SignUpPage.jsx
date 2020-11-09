@@ -14,25 +14,21 @@ function SignUpPage({setIsLoggedIn}){
 
   async function formSubmitted(e){
     e.preventDefault()
-    try{
-      const response = await api.post(`/users`, {
-        name: name,
-        nickname: nickname,
-        email: email,
-        password: password
-      })
 
+    const response = await api.post(`/users`, {
+      name: name,
+      nickname: nickname,
+      email: email,
+      password: password
+    })
+
+    if (response.ok) {
       localStorage.setItem("access_token", response.data.access_token)
       setIsLoggedIn(true)
       history.push("/")
-    } catch (error){
-      if (error.response) {
-        alert(error.response.data.error)
-      } else {
-        throw error
-      }
+    } else {
+      alert(response.data.error)
     }
-
   }
   return(
     <Container>

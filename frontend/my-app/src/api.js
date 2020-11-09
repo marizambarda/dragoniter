@@ -10,7 +10,7 @@ api.addRequestTransform(request => {
     request.headers['access_token'] = token
   }
 
-  request.headers['delay'] = 3000
+  request.headers['delay'] = 1000
 })
 
 export default api

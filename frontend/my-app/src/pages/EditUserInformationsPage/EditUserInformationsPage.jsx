@@ -4,14 +4,16 @@ import { useHistory } from "react-router-dom";
 import api from "../../api";
 import { Container, Row, Col, Form, InputGroup, FormControl, Button, Alert } from "react-bootstrap";
 import PageWithMenu from "../../components/PageWithMenu";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
-function EditSignUpPage({loggedUser}){
+function EditUserInformationsPage({loggedUser}){
   const history = useHistory();
   const [name, setName] = useState("")
   const [nickname, setNickname] = useState("")
   const [email,setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(()=>{
     if(loggedUser){
@@ -23,28 +25,29 @@ function EditSignUpPage({loggedUser}){
   async function formSubmited(e){
     e.preventDefault()
     setShowSuccessMessage(false)
-    try{
-      const data = {
-        name: name,
-        nickname: nickname,
-        email: email
-      }
-      if(password !== ""){
-        data.password = password
-      }
-      await api.put(`/me`, data)
+
+    const data = {
+      name: name,
+      nickname: nickname,
+      email: email
+    }
+    if(password !== ""){
+      data.password = password
+    }
+    setIsLoading(true)
+    const response = await api.put(`/me`, data)
+    setIsLoading(false)
+    if (response.ok) {
       setShowSuccessMessage(true)
-    } catch (error){
-      if (error.response) {
-        alert(error.response.data.error)
-      } else {
-        throw error
-      }
+    } else {
+      alert(response.data.error)
     }
   }
   return(
    <Container>
      <PageWithMenu loggedUser={loggedUser}>
+      {isLoading && <LoadingIndicator/>}
+      {!isLoading && (
        <div className="pagePadding">
           <h1 className="titlePage editUserPage">Editar dados de usuário</h1>
           {showSuccessMessage && (
@@ -106,9 +109,11 @@ function EditSignUpPage({loggedUser}){
             </Button><br/><br/>
           </Form>
         </div>
-      </PageWithMenu>
+      )}
+    </PageWithMenu>
+      
    </Container>
   )
 }
 
-export default EditSignUpPage;
+export default EditUserInformationsPage;

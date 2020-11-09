@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import api from "../../api";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 function ImageUploadModal({show, handleClose, userFieldName}){
 
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [image, setImage] = useState("")
 
   const imageUpload = async e => {
@@ -12,7 +13,7 @@ function ImageUploadModal({show, handleClose, userFieldName}){
     const data = new FormData()
     data.append('file', files[0])
     data.append('upload_preset', 'twitterprojectimages')
-    setLoading(true)
+    setIsLoading(true)
 
     const res = await fetch("https://api.cloudinary.com/v1_1/dw2wdlj0u/image/upload",{
       method: 'POST',
@@ -23,22 +24,18 @@ function ImageUploadModal({show, handleClose, userFieldName}){
     console.log(file)
 
     setImage(file.secure_url)
-    setLoading(false)
+    setIsLoading(false)
 
   }
 
   async function updateUser(){
-    try{
-      const response = await api.put(`/me`, { [userFieldName]: image })
-    } catch (error){
-      if (error.response) {
-        alert(error.response.data.error)
-      } else {
-        throw error
-      }
-    }
+    const response = await api.put(`/me`, { [userFieldName]: image })
 
-    window.location.reload();
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      alert(response.data.error)
+    }
   }
 
   return(
@@ -54,10 +51,8 @@ function ImageUploadModal({show, handleClose, userFieldName}){
           <Form.Group>
             <Form.File id="exampleFormControlFile1" label="Selecionar imagem" onChange={imageUpload}/>
           </Form.Group>
-          {
-            loading?(
-              <h5>Carregando imagem...</h5>
-            ):(
+          {isLoading && <LoadingIndicator/>}
+          {!isLoading && (
               <img src={image} className="imageErrorUpload"/>
             )
           }
