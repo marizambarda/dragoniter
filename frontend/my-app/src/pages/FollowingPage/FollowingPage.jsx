@@ -3,22 +3,31 @@ import api from "../../api";
 import { useParams } from "react-router";
 import PageWithMenu from "../../components/PageWithMenu";
 import UsersList from "../../components/UsersList";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 function FollowingPage({loggedUser}){
   const { nickname } = useParams();
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
+
   useEffect(()=>{
     async function loadData(){
+      setIsLoading(true)
       const response = await api.get(`/users/${nickname}/following`)
       setUsers(response.data)
-      console.log(response.data)
+      setIsLoading(false)
     }
     loadData()
   },[])
   return(
     <PageWithMenu loggedUser={loggedUser}>
-      <h1 className="titlePage">Seguindo</h1>
-      <UsersList users={users}/>
+      {isLoading && <LoadingIndicator/>}
+      {!isLoading && (
+        <div>
+          <h1 className="titlePage">Seguindo</h1>
+          <UsersList users={users}/>
+        </div>
+      )}
     </PageWithMenu>
   )
 }
