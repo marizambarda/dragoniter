@@ -9,7 +9,6 @@ const { catchAsyncErrorsOnRouter } = require('express-async-await-errors');
 const { allowAuthentication, requireAuthentication } = require('../middlewares');
 catchAsyncErrorsOnRouter(router)
 
-
 router.post('/users', async function (req, res){
   if(req.body.name.length > 40){
     res.status(400)
@@ -100,9 +99,15 @@ router.get('/users/:nickname', allowAuthentication, async function (req, res){
   }
   const user = users[0]
 
+  const [followers] = await db.query('SELECT COUNT (*) AS count FROM followers WHERE following_id = ?', [user.id])
+  user.followers = followers[0].count
+
+  const [following] = await db.query('SELECT COUNT (*) AS count FROM followers WHERE follower_id = ?', [user.id])
+  user.following = following[0].count
+
   if(req.user){
-    const [following] = await db.query('SELECT * FROM followers WHERE follower_id = ? AND following_id = ?', [req.user.id, user.id])
-    user.followedByMe = following.length > 0
+    const [followedByMe] = await db.query('SELECT * FROM followers WHERE follower_id = ? AND following_id = ?', [req.user.id, user.id])
+    user.followedByMe = followedByMe.length > 0
   }
 
   res.json(user)
@@ -192,6 +197,36 @@ router.post('/users/:nickname/follow', requireAuthentication, async function(req
     await db.query('INSERT INTO followers(follower_id, following_id) VALUES (?, ?)', [req.user.id, userToFollow.id])
   }
   res.status(204).end()
+})
+
+router.get('/users/:nickname/following', async function(req, res){
+  const [users] = await db.query('SELECT id FROM users WHERE nickname = ?', [req.params.nickname])
+  if(users.length === 0){
+    res.status(404).end()
+    return
+  }
+  const [followingUsers] = await db.query(`
+    SELECT users.name, users.nickname, users.avatar_url 
+    FROM followers
+    INNER JOIN users ON users.id = followers.following_id
+    WHERE follower_id = ?
+  `,[users[0].id])
+  res.json(followingUsers)
+})
+
+router.get('/users/:nickname/followers', async function(req, res){
+  const [users] = await db.query('SELECT id FROM users WHERE nickname = ?', [req.params.nickname])
+  if(users.length === 0){
+    res.status(404).end()
+    return
+  }
+  const [followedUsers] = await db.query(`
+    SELECT users.name, users.nickname, users.avatar_url 
+    FROM followers
+    INNER JOIN users ON users.id = followers.follower_id
+    WHERE following_id = ?
+  `,[users[0].id])
+  res.json(followedUsers)
 })
 
 router.delete('/users/:nickname/follow', requireAuthentication, async function(req, res){

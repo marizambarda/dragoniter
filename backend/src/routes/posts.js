@@ -49,7 +49,7 @@ router.get('/mentions', requireAuthentication, async function(req, res){
 
 router.get('/hashtags/:hashtag/posts', async function(req, res){
   const [posts] = await db.query(`
-    SELECT  posts.*, users.name, users.nickname, users.avatar_url 
+    SELECT posts.*, users.name, users.nickname, users.avatar_url 
     FROM posts 
     INNER JOIN users ON posts.user_id = users.id 
     WHERE posts.body LIKE ? 
