@@ -19,7 +19,7 @@ function MentionsPage({loggedUser}){
   }, [])
   return(
     <PageWithMenu loggedUser={loggedUser} >
-      <h1 className="titleMentionsPage">Menções</h1>
+      <h1 className="titlePage">Menções</h1>
       <PostsList posts={posts} loggedUser={loggedUser}/>  
     </PageWithMenu>
   )

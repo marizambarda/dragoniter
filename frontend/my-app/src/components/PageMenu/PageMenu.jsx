@@ -53,7 +53,7 @@ function LoggedInMenu ({ loggedUser }) {
   )
 }
 
-function LoggedOutMenu ({ loggedUser }) {
+function LoggedOutMenu () {
   return (
     <>
       <Row>

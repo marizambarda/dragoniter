@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
-import { Button, Image } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Button, Image} from "react-bootstrap";
 import "./ProfilePage.scss";
 import PageWithMenu from "../../components/PageWithMenu";
 import PostsList from "../../components/PostsList";
@@ -133,15 +134,25 @@ function ProfileHeaderUserInformation({ user, isMe }) {
   }
   return (
     <div className="profileUserInformation">
+      <div className="userIdentification ">
+        <div className="profileUserName">
+          {user.name}
+        </div>
+        
+        <div className="profileUserNickname">
+          @{user.nickname}
+        </div>
+      </div>
+      <div className="following">
+        <Link className="follow" to={`/${user.nickname}/following`}>{user.following} Seguindo </Link>
+      </div>
+      <div className="followers">
+        <Link className="follow"  to={`/${user.nickname}/followers`}>{user.followers} Seguidores </Link>
+      </div> 
+      <div className="buttons">
       {!isMe && !user.followedByMe && <Button className="buttonFollow" variant="primary" onClick={follow}>Seguir</Button> }
       {!isMe && user.followedByMe && <Button className="buttonFollow buttonUnFollow" variant="primary" onClick={unFollow}>Seguindo</Button> }
-      
-      <div className="profileUserName">
-        {user.name}
-      </div>
-      <div className="profileUserNickname">
-        @{user.nickname}
-      </div>
+      </div> 
     </div>
   )
 }

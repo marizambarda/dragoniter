@@ -11,7 +11,8 @@ import ProfilePage from "./pages/ProfilePage";
 import MentionsPage from "./pages/MentionsPage";
 import HashtagsPage from "./pages/HashtagsPage";
 import EditSignUpPage from "./pages/EditSignUpPage";
-
+import FollowingPage from "./pages/FollowingPage";
+import FollowersPage from "./pages/FollowersPage";
 
 
 // Dependencies
@@ -59,8 +60,14 @@ function App() {
             <HashtagsPage loggedUser={loggedUser}/>
           </Route>
           <AuthenticatedRoute path="/editprofile" isLoggedIn={isLoggedIn}>
-            <EditSignUpPage loggedUser={loggedUser} />
+            <EditSignUpPage loggedUser={loggedUser} /> FollowingPage
           </AuthenticatedRoute> 
+          <Route path="/:nickname/following">
+            <FollowingPage loggedUser={loggedUser} /> 
+          </Route> 
+          <Route path="/:nickname/followers">
+            <FollowersPage loggedUser={loggedUser} /> 
+          </Route> 
           <Route path="/:nickname">
             <ProfilePage loggedUser={loggedUser} />
           </Route> 

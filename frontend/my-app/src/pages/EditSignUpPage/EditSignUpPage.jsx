@@ -50,7 +50,7 @@ function EditSignUpPage({loggedUser}){
    <Container>
      <PageWithMenu loggedUser={loggedUser}>
        <div className="pagePadding">
-          <h2>Editar dados de usuário</h2>
+          <h1 className="titlePage editUserPage">Editar dados de usuário</h1>
           {showSuccessMessage && (
             <Alert variant={'success'}>
             Dados atualizados com sucesso!
