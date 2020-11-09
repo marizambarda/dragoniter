@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './App.scss';
-import axios from "axios";
-
+import api from "./api";
 
 // Pages
 import SignUpPage from "./pages/SignUpPage";
@@ -13,7 +12,6 @@ import HashtagsPage from "./pages/HashtagsPage";
 import EditSignUpPage from "./pages/EditSignUpPage";
 import FollowingPage from "./pages/FollowingPage";
 import FollowersPage from "./pages/FollowersPage";
-
 
 // Dependencies
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,15 +25,9 @@ function App() {
   useEffect(()=>{
     async function getData(){
       if(isLoggedIn){
-        const response = await axios.get(`http://localhost:9000/me`, {
-          
-          headers: {
-            access_token: localStorage.getItem("access_token")
-          }
-        })
+        const response = await api.get('/me')
         setLoggedUser(response.data)
       }
-      
     }    
     getData();
   }, [isLoggedIn])

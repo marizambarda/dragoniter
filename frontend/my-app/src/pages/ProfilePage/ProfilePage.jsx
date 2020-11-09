@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import axios from "axios";
+import api from "../../api";
 import { Link } from "react-router-dom";
 import { Button, Image} from "react-bootstrap";
 import "./ProfilePage.scss";
@@ -17,20 +17,12 @@ function ProfilePage({loggedUser}){
 
   useEffect(()=>{
     async function fetchUserData(){
-      const response = await axios.get(`http://localhost:9000/users/${nickname}`, {
-        headers: {
-          access_token: localStorage.getItem("access_token")
-        }
-      })
+      const response = await api.get(`/users/${nickname}`)
       setUser(response.data)
     }
 
     async function fetchUserPosts() {
-      const response = await axios.get(`http://localhost:9000/users/${nickname}/posts`, {
-        headers: {
-          access_token: localStorage.getItem("access_token")
-        }
-      })
+      const response = await api.get(`/users/${nickname}/posts`)
       setPosts(response.data)
     }
 
@@ -117,19 +109,11 @@ function ProfileHeaderAvatar ({ user, isMe, loggedUser }) {
 
 function ProfileHeaderUserInformation({ user, isMe }) {
   async function follow(){
-    const response = await axios.post(`http://localhost:9000/users/${user.nickname}/follow`,{},{
-      headers: {
-        access_token: localStorage.getItem("access_token")
-      }
-    })
+    const response = await api.post(`/users/${user.nickname}/follow`, {})
     window.location.reload()
   }
   async function unFollow(){
-    const response = await axios.delete(`http://localhost:9000/users/${user.nickname}/follow`,{
-      headers: {
-        access_token: localStorage.getItem("access_token")
-      }
-    })
+    const response = await api.delete(`/users/${user.nickname}/follow`)
     window.location.reload()
   }
   return (

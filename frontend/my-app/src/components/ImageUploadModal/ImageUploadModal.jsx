@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import axios from "axios";
+import api from "../../api";
 
 function ImageUploadModal({show, handleClose, userFieldName}){
 
@@ -29,13 +29,7 @@ function ImageUploadModal({show, handleClose, userFieldName}){
 
   async function updateUser(){
     try{
-      const response = await axios.put(`http://localhost:9000/me`,{
-        [userFieldName]: image
-      },{
-        headers: {
-          access_token: localStorage.getItem("access_token")
-        }
-      })
+      const response = await api.put(`/me`, { [userFieldName]: image })
     } catch (error){
       if (error.response) {
         alert(error.response.data.error)

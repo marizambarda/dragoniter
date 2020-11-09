@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./PostsList.scss";
-import axios from "axios";
+import api from "../../api";
 import { Link } from "react-router-dom";
 import { Button, Row, Col } from "react-bootstrap";
 import { DateTime } from 'luxon';
@@ -30,11 +30,7 @@ function Post({post, loggedUser}){
 
   async function deleteTwitte(){
     if(window.confirm(`Tem certeza que deseja deletar?`)){
-      await axios.delete(`http://localhost:9000/post/${post.id}`,{
-        headers: {
-          access_token: localStorage.getItem("access_token")
-        }
-      })
+      await api.delete(`/post/${post.id}`)
     }
     window.location.reload()
   }

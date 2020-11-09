@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import axios from "axios";
+import api from "../../api";
 import { Form, Button } from "react-bootstrap";
 import "./CreatePostForm.scss";
 
@@ -14,13 +14,7 @@ function CreatePostForm({loggedUser, defaultText, buttonText}){
 
   async function formSubmited(e){
     e.preventDefault()
-    await axios.post(`http://localhost:9000/posts`, {
-      body: postBody
-    }, {
-      headers: {
-        access_token: localStorage.getItem("access_token")
-      }
-    })
+    await api.post(`/posts`, { body: postBody })
     window.location.reload();
   }
   return(

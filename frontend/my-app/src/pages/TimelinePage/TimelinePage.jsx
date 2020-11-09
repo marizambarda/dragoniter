@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import { Container, Row, Col } from "react-bootstrap";
 import "./TimelinePage.scss";
 import PageWithMenu from "../../components/PageWithMenu";
@@ -13,11 +13,7 @@ function TimelinePage({loggedUser}){
   useEffect(()=>{
     async function getPosts(){
       try{
-        const response = await axios.get(`http://localhost:9000/posts`,{
-          headers: {
-            access_token: localStorage.getItem("access_token")
-          }
-        })
+        const response = await api.get('/posts')
         setPosts(response.data)
       } 
       catch (error){

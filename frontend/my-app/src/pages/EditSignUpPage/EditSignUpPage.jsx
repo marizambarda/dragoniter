@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
+import api from "../../api";
 import { Container, Row, Col, Form, InputGroup, FormControl, Button, Alert } from "react-bootstrap";
 import PageWithMenu from "../../components/PageWithMenu";
 
@@ -32,11 +32,7 @@ function EditSignUpPage({loggedUser}){
       if(password !== ""){
         data.password = password
       }
-      await axios.put(`http://localhost:9000/me`, data, {
-        headers: {
-          access_token: localStorage.getItem("access_token")
-        }
-      })
+      await api.put(`/me`, data)
       setShowSuccessMessage(true)
     } catch (error){
       if (error.response) {

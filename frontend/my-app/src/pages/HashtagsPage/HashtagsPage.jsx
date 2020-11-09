@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import { useParams } from "react-router";
 import PageWithMenu from "../../components/PageWithMenu";
 import PostsList from "../../components/PostsList/PostsList";
@@ -11,11 +11,7 @@ function HashtagsPage({loggedUser}){
 
   useEffect(()=>{
     async function loadHashtags(){
-      const response = await axios.get(`http://localhost:9000/hashtags/${hashtag}/posts`, {
-        headers: {
-          access_token: localStorage.getItem("access_token")
-        }
-      })
+      const response = await api.get(`/hashtags/${hashtag}/posts`)
       setPosts(response.data)
     }  
     loadHashtags();

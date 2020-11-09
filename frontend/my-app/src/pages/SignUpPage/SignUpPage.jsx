@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container, Row, Col, InputGroup, FormControl } from "react-bootstrap";
 import "./SignUpPage.scss";
@@ -15,7 +15,7 @@ function SignUpPage({setIsLoggedIn}){
   async function formSubmitted(e){
     e.preventDefault()
     try{
-      const response = await axios.post(`http://localhost:9000/users`, {
+      const response = await api.post(`/users`, {
         name: name,
         nickname: nickname,
         email: email,

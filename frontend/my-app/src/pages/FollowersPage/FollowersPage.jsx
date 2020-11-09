@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import { useParams } from "react-router";
 import PageWithMenu from "../../components/PageWithMenu";
 import UsersList from "../../components/UsersList";
@@ -10,7 +10,7 @@ function FollowersPage({loggedUser}){
   const [users, setUsers] = useState([]);
   useEffect(()=>{
     async function loadData(){
-      const response = await axios.get(`http://localhost:9000/users/${nickname}/followers`)
+      const response = await api.get(`/users/${nickname}/followers`)
       setUsers(response.data)
       console.log(response.data)
     }

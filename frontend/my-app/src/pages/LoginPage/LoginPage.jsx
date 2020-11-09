@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../api";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
 import "./LoginPage.scss";
@@ -14,7 +14,7 @@ function LoginPage({setIsLoggedIn}){
     e.preventDefault()
 
     try{
-      const response = await axios.post(`http://localhost:9000/users/login`, {
+      const response = await api.post(`/users/login`, {
         email: email,
         password: password
       })
