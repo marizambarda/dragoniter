@@ -5,6 +5,7 @@ import "./CreatePostForm.scss";
 
 function CreatePostForm({loggedUser, defaultText, buttonText}){
   const [postBody, setPostBody] = useState(defaultText);
+  const [isLoading, setIsLoading] = useState(false)
   const autoFocus = useCallback(el => {
     if (el) {
       el.focus()
@@ -14,8 +15,10 @@ function CreatePostForm({loggedUser, defaultText, buttonText}){
 
   async function formSubmited(e){
     e.preventDefault()
+    setIsLoading(true)
     await api.post(`/posts`, { body: postBody })
     window.location.reload();
+    setIsLoading(false)
   }
   return(
     <div className="createPostForm">
@@ -31,7 +34,14 @@ function CreatePostForm({loggedUser, defaultText, buttonText}){
             rows={3} 
           />
         </Form.Group>
-        <Button className="buttonSubmitPost" type="submit" variant="primary">{buttonText}</Button>{' '}
+        <Button
+          className="buttonSubmitPost"
+          type="submit"
+          variant="primary"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Enviando...' : buttonText}
+        </Button>
       </Form>
     </div>
   )

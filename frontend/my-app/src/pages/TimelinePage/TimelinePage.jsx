@@ -5,15 +5,19 @@ import "./TimelinePage.scss";
 import PageWithMenu from "../../components/PageWithMenu";
 import PostsList from "../../components/PostsList";
 import CreatePostForm from "../../components/CreatePostForm";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 
 function TimelinePage({loggedUser}){
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(()=>{
     async function getPosts(){
       try{
+        setIsLoading(true)
         const response = await api.get('/posts')
+        setIsLoading(false)
         setPosts(response.data)
       } 
       catch (error){
@@ -34,7 +38,10 @@ function TimelinePage({loggedUser}){
         <div class="createPostFormContainer">
           <CreatePostForm loggedUser={loggedUser} defaultText={""} buttonText={"Twittar"}/>
         </div>
-        <PostsList posts={posts} loggedUser={loggedUser}/>
+        {isLoading && <LoadingIndicator/>}
+        {!isLoading && (
+          <PostsList posts={posts} loggedUser={loggedUser}/>
+        )}   
       </PageWithMenu>
     </div>
   )

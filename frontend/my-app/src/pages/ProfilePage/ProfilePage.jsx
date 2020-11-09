@@ -9,6 +9,7 @@ import PostsList from "../../components/PostsList";
 import ImageUploadModal from "../../components/ImageUploadModal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 function ProfilePage({loggedUser}){
   const { nickname } = useParams();
@@ -30,15 +31,16 @@ function ProfilePage({loggedUser}){
     fetchUserPosts()
   }, [nickname])
 
-  if (!user) {
-    return <div>Carregando...</div>
-  }
-
   return(
     <div className="profilePage">
       <PageWithMenu loggedUser={loggedUser}>
-        <ProfileHeader user={user} loggedUser={loggedUser}/>
-        <PostsList posts={posts} loggedUser={loggedUser}/>
+        {!user && <LoadingIndicator />}
+        {user && (
+          <div>
+            <ProfileHeader user={user} loggedUser={loggedUser}/>
+            <PostsList posts={posts} loggedUser={loggedUser}/>
+          </div>
+        )}
       </PageWithMenu>
     </div>
   )
