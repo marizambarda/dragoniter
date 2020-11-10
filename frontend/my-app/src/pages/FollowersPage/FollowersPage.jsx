@@ -6,7 +6,7 @@ import UsersList from "../../components/UsersList";
 import LoadingIndicator from "../../components/LoadingIndicator";
 
 
-function FollowersPage({loggedUser}){
+function FollowersPage(){
   const { nickname } = useParams();
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
@@ -21,11 +21,11 @@ function FollowersPage({loggedUser}){
     loadData()
   },[])
   return(
-    <PageWithMenu loggedUser={loggedUser}>
+    <PageWithMenu>
       {isLoading && <LoadingIndicator/>}
       {!isLoading && (
         <div>
-          <h1 className="titlePage">Seguidores</h1>
+          <h1 className="pageTitle">Seguidores</h1>
           <UsersList users={users}/>
         </div>
       )}

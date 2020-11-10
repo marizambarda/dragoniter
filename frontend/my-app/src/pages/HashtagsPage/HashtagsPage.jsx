@@ -5,7 +5,7 @@ import PageWithMenu from "../../components/PageWithMenu";
 import PostsList from "../../components/PostsList/PostsList";
 import "./HashtagsPage.scss";
 
-function HashtagsPage({loggedUser}){
+function HashtagsPage(){
   const [posts, setPosts] =  useState([])
   const { hashtag } = useParams();
 
@@ -17,9 +17,9 @@ function HashtagsPage({loggedUser}){
     loadHashtags();
   }, [])
   return(
-    <PageWithMenu loggedUser={loggedUser} >
-      <h1 className="titleMentionsPage">#{hashtag}</h1>
-      <PostsList posts={posts} loggedUser={loggedUser}/>  
+    <PageWithMenu>
+      <h1 className="pageTitle">#{hashtag}</h1>
+      <PostsList posts={posts} />  
     </PageWithMenu>
   )
 }

@@ -5,7 +5,7 @@ import PostsList from "../../components/PostsList/PostsList";
 import "./MentionsPage.scss";
 import LoadingIndicator from "../../components/LoadingIndicator";
 
-function MentionsPage({loggedUser}){
+function MentionsPage(){
   const [posts, setPosts] =  useState([])
   const [isLoading, setIsLoading] = useState(false)
 
@@ -19,12 +19,12 @@ function MentionsPage({loggedUser}){
     loadMentions();
   }, [])
   return(
-    <PageWithMenu loggedUser={loggedUser} >
+    <PageWithMenu>
       {isLoading && <LoadingIndicator />}
       {!isLoading && (
         <div>
-          <h1 className="titlePage">Menções</h1>
-          <PostsList posts={posts} loggedUser={loggedUser}/>  
+          <h1 className="pageTitle">Menções</h1>
+          <PostsList posts={posts} />  
         </div>
       )}
     </PageWithMenu>

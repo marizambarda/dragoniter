@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import './App.scss';
-import api from "./api";
+import React from "react";
+import "./App.scss";
+import AppContextProvider, { useAppContext} from "./AppContext";
 
 // Pages
 import SignUpPage from "./pages/SignUpPage";
@@ -21,66 +21,59 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("access_token") !== null)
-  const [loggedUser, setLoggedUser] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(()=>{
-    async function getData(){
-      if(isLoggedIn){
-        setIsLoading(true)
-        const response = await api.get('/me')
-        setIsLoading(false)
-        setLoggedUser(response.data)
-      }
-    }    
-    getData();
-  }, [isLoggedIn])
-  
   return (
+    <AppContextProvider>
+      <AppRouter/>
+    </AppContextProvider>
+  );
+}
+
+function AppRouter(){
+  const {isLoadingLoggedUser} = useAppContext()
+  return(
     <div>
-      { isLoading && <LoadingIndicator /> }
+      { isLoadingLoggedUser && <LoadingIndicator /> }
       {
-        !isLoading && (
+        !isLoadingLoggedUser && (
           <Router>
             <Switch>
-              <AuthenticatedRoute path="/" exact={true} isLoggedIn={isLoggedIn}>
-                <TimelinePage loggedUser={loggedUser} />
+              <AuthenticatedRoute path="/" exact={true}>
+                <TimelinePage />
               </AuthenticatedRoute>
               <Route path="/users/login">
-                <LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+                <LoginPage />
               </Route>
               <Route path="/users/signup">
-                <SignUpPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />
+                <SignUpPage  />
               </Route>
-              <AuthenticatedRoute path="/mentions" isLoggedIn={isLoggedIn}>
-                <MentionsPage loggedUser={loggedUser}/>
+              <AuthenticatedRoute path="/mentions" >
+                <MentionsPage />
               </AuthenticatedRoute>
               <Route path="/hashtags/:hashtag">
-                <HashtagsPage loggedUser={loggedUser}/>
+                <HashtagsPage />
               </Route>
-              <AuthenticatedRoute path="/editprofile" isLoggedIn={isLoggedIn}>
-                <EditUserInformationsPage loggedUser={loggedUser} /> FollowingPage
+              <AuthenticatedRoute path="/editprofile" >
+                <EditUserInformationsPage />
               </AuthenticatedRoute> 
               <Route path="/:nickname/following">
-                <FollowingPage loggedUser={loggedUser} /> 
+                <FollowingPage /> 
               </Route> 
               <Route path="/:nickname/followers">
-                <FollowersPage loggedUser={loggedUser} /> 
+                <FollowersPage /> 
               </Route> 
               <Route path="/:nickname">
-                <ProfilePage loggedUser={loggedUser} />
+                <ProfilePage />
               </Route> 
-              
             </Switch>
           </Router>
         )
       }
     </div>
-  );
+  )
 }
 
-function AuthenticatedRoute({ isLoggedIn, ...props}){
+function AuthenticatedRoute(props){
+  const {isLoggedIn} = useAppContext()
   if(isLoggedIn){
     return <Route {...props}/>
   } else{

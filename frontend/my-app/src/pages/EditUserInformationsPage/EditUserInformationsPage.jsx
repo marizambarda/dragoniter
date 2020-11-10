@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { useHistory } from "react-router-dom";
 import api from "../../api";
+import { useAppContext} from "../../AppContext";
 import { Container, Row, Col, Form, InputGroup, FormControl, Button, Alert } from "react-bootstrap";
 import PageWithMenu from "../../components/PageWithMenu";
 import LoadingIndicator from "../../components/LoadingIndicator";
 
-function EditUserInformationsPage({loggedUser}){
-  const history = useHistory();
+function EditUserInformationsPage(){
+  const {loggedUser} = useAppContext()
   const [name, setName] = useState("")
   const [nickname, setNickname] = useState("")
   const [email,setEmail] = useState("")
@@ -22,6 +21,7 @@ function EditUserInformationsPage({loggedUser}){
       setNickname(loggedUser.nickname)
     }
   }, [loggedUser])
+  
   async function formSubmited(e){
     e.preventDefault()
     setShowSuccessMessage(false)
@@ -45,11 +45,11 @@ function EditUserInformationsPage({loggedUser}){
   }
   return(
    <Container>
-     <PageWithMenu loggedUser={loggedUser}>
+     <PageWithMenu>
       {isLoading && <LoadingIndicator/>}
       {!isLoading && (
        <div className="pagePadding">
-          <h1 className="titlePage editUserPage">Editar dados de usuário</h1>
+          <h1 className="pageTitle  editUserPage">Editar dados de usuário</h1>
           {showSuccessMessage && (
             <Alert variant={'success'}>
             Dados atualizados com sucesso!

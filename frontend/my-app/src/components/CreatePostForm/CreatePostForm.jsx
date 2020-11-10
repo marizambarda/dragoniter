@@ -1,11 +1,15 @@
 import React, { useState, useCallback } from "react";
 import api from "../../api";
 import { Form, Button } from "react-bootstrap";
+import { useAppContext} from "../../AppContext";
 import "./CreatePostForm.scss";
 
-function CreatePostForm({loggedUser, defaultText, buttonText}){
-  const [postBody, setPostBody] = useState(defaultText);
+
+function CreatePostForm({ defaultText, buttonText}){
+  const {loggedUser} = useAppContext()
+  const [postBody, setPostBody] = useState(defaultText)
   const [isLoading, setIsLoading] = useState(false)
+
   const autoFocus = useCallback(el => {
     if (el) {
       el.focus()

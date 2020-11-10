@@ -1,16 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Image } from "react-bootstrap";
+import { useAppContext} from "../../AppContext";
 import "./PageMenu.scss";
 
 
-function PageMenu({loggedUser}){
+function PageMenu(){
+  const {loggedUser} = useAppContext()
   let menu
 
   if (loggedUser) {
-    menu = <LoggedInMenu loggedUser={loggedUser} />
+    menu = <LoggedInMenu/>
   } else {
-    menu = <LoggedOutMenu loggedUser={loggedUser} />
+    menu = <LoggedOutMenu/>
   }
 
   return(
@@ -22,7 +24,9 @@ function PageMenu({loggedUser}){
   )
 }
 
-function LoggedInMenu ({ loggedUser }) {
+function LoggedInMenu () {
+  const {loggedUser} = useAppContext()
+
   async function logout(e){
     e.preventDefault()
     if (window.confirm('Deseja sair?')) {

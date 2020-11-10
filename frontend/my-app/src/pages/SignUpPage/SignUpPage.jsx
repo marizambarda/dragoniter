@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import api from "../../api";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container, Row, Col, InputGroup, FormControl } from "react-bootstrap";
+import { useAppContext} from "../../AppContext";
 import "./SignUpPage.scss";
 import LoadingIndicator from "../../components/LoadingIndicator";
 
-function SignUpPage({setIsLoggedIn}){
+function SignUpPage(){
+  const {setIsLoggedIn} = useAppContext()
   const history = useHistory();
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");

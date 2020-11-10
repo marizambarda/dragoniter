@@ -3,12 +3,12 @@ import { Container, Row, Col } from "react-bootstrap";
 import PageMenu from '../PageMenu';
 import './PageWithMenu.scss'
 
-function PageWithMenu({ children, loggedUser }){
+function PageWithMenu({ children }){
   return (
     <Container>
       <Row className="no-gutters">
         <Col md={{span: 2, offset:2}}>
-          <PageMenu loggedUser={loggedUser} />
+          <PageMenu />
         </Col>
         <Col md={6} className="pageWithMenu-content">
           {children}

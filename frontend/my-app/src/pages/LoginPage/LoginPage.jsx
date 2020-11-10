@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import api from "../../api";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
+import { useAppContext} from "../../AppContext";
 import "./LoginPage.scss";
 import LoadingIndicator from "../../components/LoadingIndicator";
 
-function LoginPage({setIsLoggedIn}){
+function LoginPage(){
+  const {setIsLoggedIn} = useAppContext()
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

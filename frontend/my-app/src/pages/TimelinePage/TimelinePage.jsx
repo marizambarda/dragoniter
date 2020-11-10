@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import api from "../../api";
-import { Container, Row, Col } from "react-bootstrap";
 import "./TimelinePage.scss";
 import PageWithMenu from "../../components/PageWithMenu";
 import PostsList from "../../components/PostsList";
@@ -8,7 +7,7 @@ import CreatePostForm from "../../components/CreatePostForm";
 import LoadingIndicator from "../../components/LoadingIndicator";
 
 
-function TimelinePage({loggedUser}){
+function TimelinePage(){
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
 
@@ -27,13 +26,13 @@ function TimelinePage({loggedUser}){
 
   return(
     <div className="timelinePage">
-      <PageWithMenu loggedUser={loggedUser}>
+      <PageWithMenu>
         <div class="createPostFormContainer">
-          <CreatePostForm loggedUser={loggedUser} defaultText={""} buttonText={"Twittar"}/>
+          <CreatePostForm defaultText={""} buttonText={"Twittar"}/>
         </div>
         {isLoading && <LoadingIndicator/>}
         {!isLoading && (
-          <PostsList posts={posts} loggedUser={loggedUser}/>
+          <PostsList posts={posts}/>
         )}   
       </PageWithMenu>
     </div>

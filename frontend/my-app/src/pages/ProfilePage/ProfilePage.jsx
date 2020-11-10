@@ -10,8 +10,9 @@ import ImageUploadModal from "../../components/ImageUploadModal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
 import LoadingIndicator from "../../components/LoadingIndicator";
+import { useAppContext } from "../../AppContext";
 
-function ProfilePage({loggedUser}){
+function ProfilePage(){
   const { nickname } = useParams();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -33,12 +34,12 @@ function ProfilePage({loggedUser}){
 
   return(
     <div className="profilePage">
-      <PageWithMenu loggedUser={loggedUser}>
+      <PageWithMenu>
         {!user && <LoadingIndicator />}
         {user && (
           <div>
-            <ProfileHeader user={user} loggedUser={loggedUser}/>
-            <PostsList posts={posts} loggedUser={loggedUser}/>
+            <ProfileHeader user={user}/>
+            <PostsList posts={posts}/>
           </div>
         )}
       </PageWithMenu>
@@ -46,7 +47,8 @@ function ProfilePage({loggedUser}){
   )
 }
 
-function ProfileHeader({ user, loggedUser }) {
+function ProfileHeader({ user }) {
+  const {loggedUser} = useAppContext()
   const isMe = loggedUser && user.id === loggedUser.id
 
   return (
@@ -87,7 +89,7 @@ function ProfileHeaderCover ({ user, isMe }) {
   )
 }
 
-function ProfileHeaderAvatar ({ user, isMe, loggedUser }) {
+function ProfileHeaderAvatar ({ user, isMe  }) {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
 
   return (
@@ -110,12 +112,14 @@ function ProfileHeaderAvatar ({ user, isMe, loggedUser }) {
 }
 
 function ProfileHeaderUserInformation({ user, isMe }) {
+  const {loggedUser} = useAppContext()
+  
   async function follow(){
-    const response = await api.post(`/users/${user.nickname}/follow`, {})
+    await api.post(`/users/${user.nickname}/follow`, {})
     window.location.reload()
   }
   async function unFollow(){
-    const response = await api.delete(`/users/${user.nickname}/follow`)
+    await api.delete(`/users/${user.nickname}/follow`)
     window.location.reload()
   }
   return (
@@ -136,7 +140,7 @@ function ProfileHeaderUserInformation({ user, isMe }) {
         <Link className="follow"  to={`/${user.nickname}/followers`}>{user.followers} Seguidores </Link>
       </div> 
       <div className="buttons">
-      {!isMe && !user.followedByMe && <Button className="buttonFollow" variant="primary" onClick={follow}>Seguir</Button> }
+      {loggedUser && !isMe && !user.followedByMe && <Button className="buttonFollow" variant="primary" onClick={follow}>Seguir</Button> }
       {!isMe && user.followedByMe && <Button className="buttonFollow buttonUnFollow" variant="primary" onClick={unFollow}>Seguindo</Button> }
       </div> 
     </div>
