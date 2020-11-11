@@ -16,26 +16,6 @@
   .profileUserNickname{
     color: #666;
   }
-  .buttonFollow{
-    background-color: #fff;
-    border-color: #00acee;
-    color: #00acee ;
-    border-radius: 20px;
-    font-weight: bold;
-
-    &:hover{
-      background-color: darken(#00acee, 3%);
-      border-color: darken(#00acee, 3%);
-    }
-  }
-  .buttonUnFollow{
-    background-color: darken(#00acee, 3%);
-    border-color: darken(#00acee, 3%);
-    color: #fff;
-    &:hover{
-      background-color: darken(#00acee, 3%);
-    }
-  }
   .profileCover{
     height: 200px;
     background-color: #ddd;

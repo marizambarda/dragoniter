@@ -14,6 +14,7 @@ import { useAppContext } from "../../AppContext";
 
 function ProfilePage(){
   const { nickname } = useParams();
+  const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
 
@@ -28,15 +29,21 @@ function ProfilePage(){
       setPosts(response.data)
     }
 
-    fetchUserData()
-    fetchUserPosts()
+    async function fetchData () {
+      setIsLoading(true)
+      await fetchUserData()
+      await fetchUserPosts()
+      setIsLoading(false)
+    }
+
+    fetchData()
   }, [nickname])
 
   return(
     <div className="profilePage">
       <PageWithMenu>
-        {!user && <LoadingIndicator />}
-        {user && (
+        {isLoading && <LoadingIndicator />}
+        {!isLoading && user && (
           <div>
             <ProfileHeader user={user}/>
             <PostsList posts={posts}/>
@@ -113,12 +120,15 @@ function ProfileHeaderAvatar ({ user, isMe  }) {
 
 function ProfileHeaderUserInformation({ user, isMe }) {
   const {loggedUser} = useAppContext()
+  const [isLoading, setIsLoading] = useState(false)
   
   async function follow(){
-    await api.post(`/users/${user.nickname}/follow`, {})
+    setIsLoading(true)
+    await api.post(`/users/${user.nickname}/follow`)
     window.location.reload()
   }
   async function unFollow(){
+    setIsLoading(true)
     await api.delete(`/users/${user.nickname}/follow`)
     window.location.reload()
   }
@@ -140,8 +150,24 @@ function ProfileHeaderUserInformation({ user, isMe }) {
         <Link className="follow"  to={`/${user.nickname}/followers`}>{user.followers} Seguidores </Link>
       </div> 
       <div className="buttons">
-      {loggedUser && !isMe && !user.followedByMe && <Button className="buttonFollow" variant="primary" onClick={follow}>Seguir</Button> }
-      {!isMe && user.followedByMe && <Button className="buttonFollow buttonUnFollow" variant="primary" onClick={unFollow}>Seguindo</Button> }
+      {loggedUser && !isMe && !user.followedByMe && (
+        <Button
+          variant="secondary"
+          onClick={follow}
+          disabled={isLoading}
+        >
+          {isLoading ? <LoadingIndicator small /> : 'Seguir'}
+        </Button>
+      )}
+      {!isMe && user.followedByMe && (
+        <Button
+          variant="primary"
+          onClick={unFollow}
+          disabled={isLoading}
+        >
+          {isLoading ? <LoadingIndicator small /> : 'Seguindo'}
+        </Button>
+      )}
       </div> 
     </div>
   )

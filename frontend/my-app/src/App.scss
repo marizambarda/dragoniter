@@ -22,6 +22,23 @@
 
   &:hover{
     background-color: darken(#00acee, 3%);
-    border-color: darken(#00acee, 3%);;
+    border-color: darken(#00acee, 3%);
   }
+}
+
+.btn.btn-secondary{
+  background-color: #fff;
+  color: #00acee;
+  border-color: #00acee;
+
+  &:hover{
+    background-color: darken(#00acee, 3%);
+    border-color: darken(#00acee, 3%);
+    color: #fff;
+  }
+}
+
+.btn {
+  font-weight: bold !important;
+  border-radius: 20px !important;
 }
