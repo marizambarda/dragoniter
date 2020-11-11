@@ -10,3 +10,18 @@
 .editUserPage{
   padding-left: 0;
 }
+.loginPage h1,
+.signupPage h1{
+  text-align: center;
+  padding-top: 20px;
+}
+
+.btn.btn-primary{
+  background-color: #00acee;
+  border-color: #00acee;
+
+  &:hover{
+    background-color: darken(#00acee, 3%);
+    border-color: darken(#00acee, 3%);;
+  }
+}

@@ -1,9 +1,10 @@
 const db = require('../db');
 const express = require('express');
-const { validateEmail, validateNickname } = require("./functions");
+const { validateEmail, validateNickname } = require('./functions');
 const router = express.Router();
 const { uuid } = require('uuidv4');
-const _ = require("lodash");
+const _ = require('lodash');
+const bcrypt = require('bcrypt');
 
 const { catchAsyncErrorsOnRouter } = require('express-async-await-errors');
 const { allowAuthentication, requireAuthentication } = require('../middlewares');
@@ -70,21 +71,24 @@ router.post('/users', async function (req, res){
     res.json({error: "Senha muito pequena, use no mínimo 6 caracteres!"})
     return
   }
-
-  const [result] = await db.query('INSERT INTO users(name, email, nickname, password, access_token) VALUES (?, ?, ?, ?, ?)', [req.body.name, req.body.email, req.body.nickname, req.body.password, uuid()])
+  const passwordHash = await bcrypt.hash(req.body.password, 10)
+  const [result] = await db.query('INSERT INTO users(name, email, nickname, password, access_token) VALUES (?, ?, ?, ?, ?)', [req.body.name, req.body.email, req.body.nickname, passwordHash, uuid()])
   const [users] = await db.query('SELECT * FROM users WHERE id = ?', [result.insertId])
   res.json(users[0])
 
 })
 
 router.post('/users/login', async function (req, res){
-  const [users] = await db.query('SELECT * FROM users WHERE email = ? AND password = ?', [req.body.email, req.body.password])
+  const [users] = await db.query('SELECT * FROM users WHERE email = ?', [req.body.email])
   if(users.length === 1){
-    res.json(users[0])
-  } else{
-    res.status(401)
-    res.json({error: "Email ou senha incorretos!"})
+    const isPasswordCorrect = await bcrypt.compare(req.body.password, users[0].password)
+    if(isPasswordCorrect){
+      res.json(users[0])
+      return
+    }
   } 
+  res.status(401)
+  res.json({error: "Email ou senha incorretos!"})
 })
 
 router.get('/me', requireAuthentication, async function(req, res){
@@ -117,12 +121,12 @@ router.put('/me', requireAuthentication, async function(req, res){
   const fields = _.pick(req.body, ['name', 'nickname', 'email', 'password', 'avatar_url', 'cover_url'])
   
   if(fields.name){
-    if(req.body.name.length > 40){
+    if(fields.name.length > 40){
       res.status(400)
       res.json({error: "Nome muito grande, use no máximo 40 caracteres!"})
       return
     }
-    if(req.body.name.length < 2){
+    if(fields.name.length < 2){
       res.status(400)
       res.json({error: "Nome muito pequeno, use no minímo 2 caracteres!"})
       return
@@ -151,34 +155,36 @@ router.put('/me', requireAuthentication, async function(req, res){
       res.json({error: "Este nome de usuário já está em uso!"})
       return
     }
-    if(!validateNickname(req.body.nickname)){
+    if(!validateNickname(fields.nickname)){
       res.status(400)
       res.json({error: "Nome de usuário inválido, utilize apenas letras (a-z ou A-Z), números e underline (_)"})
       return
     }
-    if(req.body.nickname.length < 5){
+    if(fields.nickname.length < 5){
       res.status(400)
       res.json({error: "Nome de usuário muito pequeno, use no minímo 5 caracteres!"})
       return
     }
-    if(req.body.nickname.length > 15){
+    if(fields.nickname.length > 15){
       res.status(400)
       res.json({error: "Nome de usuário muito grande, use no máximo 15 caracteres!"})
       return
     }
   }
   if(fields.password){
-    if(req.body.password.length > 40){
+    if(fields.password.length > 40){
       res.status(400)
       res.json({error: "Senha muito grande, use no máximo 40 caracteres!"})
       return
     }
-    if(req.body.password.length < 6){
+    if(fields.password.length < 6){
       res.status(400)
       res.json({error: "Senha muito pequena, use no mínimo 6 caracteres!"})
       return
     }
+    fields.password = await bcrypt.hash(fields.password, 10)
   }
+  
   await db.query('UPDATE users SET ? WHERE id = ?', [fields, req.user.id])
   const [users] = await db.query('SELECT * FROM users WHERE id = ?', [req.user.id])
   res.json(users[0]);

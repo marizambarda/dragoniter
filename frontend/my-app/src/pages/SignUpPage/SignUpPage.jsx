@@ -35,71 +35,68 @@ function SignUpPage(){
     }
   }
   return(
-    <Container>
-      <h1>Cadastrar-se</h1>
-      <Form className="form" onSubmit={formSubmitted}
-      >
-        <Form.Group controlId="itemName">
-        <Row> 
-          <Col>
-            <Form.Label>Nome</Form.Label>
-            <Form.Control 
-              type="name" 
-              placeholder="Digite o nome"
-              value={name}
-              onChange={ e => setName(e.target.value) }
-            />
-          </Col>
-          <Col>
-            <Form.Label>
-              Nome de Usuário
-            </Form.Label>
-            <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Text>@</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl id="inlineFormInputGroupUsername" 
-              placeholder="Digite o nome de usuário" 
-              value={nickname}
-              onChange={ e => setNickname(e.target.value) }/>
-            </InputGroup>
-          </Col>
-        </Row>
-      
-        <Row>
-          <Col>
-          <Form.Label>Email</Form.Label>
-          <Form.Control 
-            type="email" 
-            placeholder="Digite o email"
-            value={email}
-            onChange={ e => setEmail(e.target.value) }
-          />
-          </Col>
-          <Col> 
-          <Form.Label>Senha</Form.Label>
-          <Form.Control 
-            type="password" 
-            placeholder="Digite a senha"  
-            value={password}
-            onChange={ e => setPassword(e.target.value) }
-          />
-          </Col>
-        </Row>
-          
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          disabled={isLoading}
-        >
-          {isLoading && <LoadingIndicator small />}
-          {isLoading ? ' Carregando' : 'Cadastrar'}
-        </Button>
-        <br />
-        <br />
-        <Link to="/users/login">Já tem uma conta? Click aqui</Link>
-      </Form>
+    <Container className="signupPage">
+      <Row>
+        <Col md={{ span: 6, offset: 3 }}>
+          <h1>Cadastrar-se</h1>
+          <Form className="form" onSubmit={formSubmitted}>
+            <Form.Group controlId="itemName">
+              <Form.Label>Nome</Form.Label>
+              <Form.Control 
+                type="name" 
+                placeholder="Digite o nome"
+                value={name}
+                onChange={ e => setName(e.target.value) }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>
+                Nome de Usuário
+              </Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend>
+                  <InputGroup.Text>@</InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl id="inlineFormInputGroupUsername" 
+                  placeholder="Digite o nome de usuário" 
+                  value={nickname}
+                  onChange={ e => setNickname(e.target.value) }/>
+              </InputGroup>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Email</Form.Label>
+              <Form.Control 
+                type="email" 
+                placeholder="Digite o email"
+                value={email}
+                onChange={ e => setEmail(e.target.value) }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Senha</Form.Label>
+              <Form.Control 
+                type="password" 
+                placeholder="Digite a senha"  
+                value={password}
+                onChange={ e => setPassword(e.target.value) }
+              />
+            </Form.Group>
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={isLoading}
+              size="lg"
+              block
+            >
+              {isLoading && <LoadingIndicator small />}
+              {isLoading ? ' Carregando' : 'Cadastrar'}
+            </Button>
+            <br />
+            <br />
+            <Link to="/users/login">Já tem uma conta? Click aqui</Link>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   )
 }

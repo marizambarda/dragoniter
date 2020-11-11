@@ -18,7 +18,7 @@ function User({ user }){
         <Image src={user.avatar_url} roundedCircle/>
       </div>
       <div className="userIdentification">
-        <div>{user.name}</div>
+        <div className="userName">{user.name}</div>
         <div>@{user.nickname}</div>
       </div>
     </Link>

@@ -1,16 +1,9 @@
 .createPostForm{
   .buttonSubmitPost{
-    background-color: #00acee;
-    border-color: #00acee;
     border-radius: 20px;
     float: right;
     font-weight: bold;
     margin-bottom: 15px;
-
-    &:hover{
-      background-color: darken(#00acee, 3%);
-      border-color: darken(#00acee, 3%);
-    }
   }
   .teste{
     margin-top: 50px;

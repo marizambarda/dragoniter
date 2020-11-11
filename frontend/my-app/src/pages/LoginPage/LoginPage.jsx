@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import api from "../../api";
 import { Link, useHistory } from "react-router-dom";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useAppContext} from "../../AppContext";
 import "./LoginPage.scss";
 import LoadingIndicator from "../../components/LoadingIndicator";
@@ -34,37 +34,42 @@ function LoginPage(){
   }
 
   return(
-    <Container>
-      <h1>Entrar</h1>
-      <Form className="form" onSubmit={formSubmitted} >
-        <Form.Group controlId="itemName">
-          <Form.Label>Email</Form.Label>
-          <Form.Control 
-            type="email" 
-            placeholder="Digite o email"
-            value={email} 
-            onChange={ e => setEmail(e.target.value) }
-          />
-          <Form.Label>Senha</Form.Label>
-          <Form.Control 
-            type="password" 
-            placeholder="Digite a senha" 
-            value={ password } 
-            onChange={ e => setPassword(e.target.value) }
-          />
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          disabled={isLoading}
-        >
-          {isLoading && <LoadingIndicator small />}
-          {isLoading ? ' Entrando' : 'Entrar'}
-        </Button>
-        <br />
-        <br />
-        <Link to="/users/signup">Não tem uma conta? Click aqui</Link>
-      </Form>
+    <Container className="loginPage">
+      <Row>
+        <Col md={{ span: 6, offset: 3 }}>
+          <h1>Entrar</h1>
+          <Form className="form" onSubmit={formSubmitted} >
+            <Form.Group controlId="itemName">
+              <Form.Label>Email</Form.Label>
+              <Form.Control 
+                type="email" 
+                placeholder="Digite o email"
+                value={email} 
+                onChange={ e => setEmail(e.target.value) }
+              />
+              <Form.Label>Senha</Form.Label>
+              <Form.Control 
+                type="password" 
+                placeholder="Digite a senha" 
+                value={ password } 
+                onChange={ e => setPassword(e.target.value) }
+              />
+            </Form.Group>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              size="lg"
+              block
+            >
+              {isLoading && <LoadingIndicator small />}
+              {isLoading ? ' Entrando' : 'Entrar'}
+            </Button>
+            <br />
+            <br />
+            <Link to="/users/signup">Não tem uma conta? Click aqui</Link>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   )
 }
