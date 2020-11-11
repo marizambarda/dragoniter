@@ -7,10 +7,10 @@ function PageWithMenu({ children }){
   return (
     <Container>
       <Row className="no-gutters">
-        <Col md={{span: 2, offset:2}}>
+        <Col lg={{span: 2, offset:2}}>
           <PageMenu />
         </Col>
-        <Col md={6} className="pageWithMenu-content">
+        <Col lg={6} className="pageWithMenu-content">
           {children}
         </Col>
       </Row> 

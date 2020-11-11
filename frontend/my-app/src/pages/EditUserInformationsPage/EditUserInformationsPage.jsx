@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import api from "../../api";
 import { useAppContext} from "../../AppContext";
 import { Container, Row, Col, Form, InputGroup, FormControl, Button, Alert } from "react-bootstrap";
-import PageWithMenu from "../../components/PageWithMenu";
 import LoadingIndicator from "../../components/LoadingIndicator";
+import PageWithMenu from "../../components/PageWithMenu";
 
 function EditUserInformationsPage(){
   const {loggedUser} = useAppContext()
@@ -46,28 +46,29 @@ function EditUserInformationsPage(){
   return(
    <Container>
      <PageWithMenu>
-      {isLoading && <LoadingIndicator/>}
-      {!isLoading && (
-       <div className="pagePadding">
-          <h1 className="pageTitle  editUserPage">Editar dados de usuário</h1>
-          {showSuccessMessage && (
-            <Alert variant={'success'}>
-            Dados atualizados com sucesso!
-           </Alert>
-          )}
-          <Form className="form" onSubmit={formSubmited}
-          >
-            <Form.Group controlId="itemName">
-            <Row> 
-              <Col>
+      <div className="pagePadding">
+        <h1 className="pageTitle  editUserPage">Editar dados de usuário</h1>
+        {showSuccessMessage && (
+          <Alert variant={'success'}>
+          Dados atualizados com sucesso!
+          </Alert>
+        )}
+        <Form className="form" onSubmit={formSubmited}
+        >
+          <Form.Group controlId="itemName">
+          <Row> 
+            <Col xs={12} sm={6}>
+              <Form.Group>
                 <Form.Label>Nome</Form.Label>
                 <Form.Control 
                   type="name"
                   value={name}
                   onChange={(e)=>setName(e.target.value)}
                 />
-              </Col>
-              <Col>
+              </Form.Group>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Form.Group>
                 <Form.Label>
                   Nome de Usuário
                 </Form.Label>
@@ -80,36 +81,48 @@ function EditUserInformationsPage(){
                   onChange={(e)=>setNickname(e.target.value)}
                   />
                 </InputGroup>
-              </Col>
-            </Row>
-          
-            <Row>
-              <Col>
-              <Form.Label>Email</Form.Label>
-              <Form.Control 
-                type="email" 
-                value={email}
-                onChange={(e)=>setEmail(e.target.value)}
-              />
-              </Col>
-              <Col> 
-              <Form.Label>Senha</Form.Label>
-              <Form.Control 
-                type="password"
-                value={password} 
-                onChange={(e)=>setPassword(e.target.value)}
-                autoComplete={false}
-              />
-              </Col>
-            </Row>
-              
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Atualizar
-            </Button><br/><br/>
-          </Form>
-        </div>
-      )}
+              </Form.Group>
+            </Col>
+          </Row>
+        
+          <Row>
+            <Col xs={12} sm={6}>
+              <Form.Group>
+                <Form.Label>
+                  Email
+                </Form.Label>
+                <Form.Control 
+                  type="email" 
+                  value={email}
+                  onChange={(e)=>setEmail(e.target.value)}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs={12} sm={6}> 
+              <Form.Group>
+                <Form.Label>Senha</Form.Label>
+                <Form.Control 
+                  type="password"
+                  value={password} 
+                  onChange={(e)=>setPassword(e.target.value)}
+                  autoComplete={false}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+            
+          </Form.Group>
+
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading && (<LoadingIndicator small />)}
+            {isLoading ? ' Atualizando' : 'Atualizar'}
+          </Button>
+        </Form>
+      </div>
     </PageWithMenu>
       
    </Container>

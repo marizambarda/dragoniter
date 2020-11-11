@@ -2,8 +2,8 @@ import React, { useState, useCallback } from "react";
 import api from "../../api";
 import { Form, Button } from "react-bootstrap";
 import { useAppContext} from "../../AppContext";
+import LoadingIndicator from "../LoadingIndicator";
 import "./CreatePostForm.scss";
-
 
 function CreatePostForm({ defaultText, buttonText}){
   const {loggedUser} = useAppContext()
@@ -44,7 +44,8 @@ function CreatePostForm({ defaultText, buttonText}){
           variant="primary"
           disabled={isLoading}
         >
-          {isLoading ? 'Enviando...' : buttonText}
+          {isLoading && <LoadingIndicator small />}
+          {isLoading ? ' Enviando' : buttonText}
         </Button>
       </Form>
     </div>

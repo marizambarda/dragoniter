@@ -4,11 +4,11 @@ import api from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { DateTime } from 'luxon';
+import LoadingIndicator from "../LoadingIndicator";
 import { useAppContext} from "../../AppContext";
 import CreatePostForm from "../../components/CreatePostForm"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faCommentDots } from '@fortawesome/free-solid-svg-icons' 
-
 
 function PostsList({posts}){
   return(
@@ -20,6 +20,7 @@ function PostsList({posts}){
 
 function Post({ post }){
   const {loggedUser} = useAppContext()
+  const [isLoading, setIsLoading] = useState(false)
   const [reply, setReply] = useState(false)
   const isMe = loggedUser && post.user_id === loggedUser.id
 
@@ -30,7 +31,9 @@ function Post({ post }){
 
   async function deleteTwitte(){
     if(window.confirm(`Tem certeza que deseja deletar?`)){
+      setIsLoading(true)
       await api.delete(`/post/${post.id}`)
+      setIsLoading(false)
     }
     window.location.reload()
   }
@@ -69,7 +72,15 @@ function Post({ post }){
 
       <div>
         {isMe && (
-          <Button className="btnDeletePost" variant="light" onClick={deleteTwitte}><FontAwesomeIcon icon={faTrashAlt} /></Button>
+          <Button 
+            disabled={isLoading}
+            className="btnDeletePost" 
+            variant="light" 
+            onClick={deleteTwitte}
+          >
+            {!isLoading && <FontAwesomeIcon icon={faTrashAlt} />}
+            {isLoading && <LoadingIndicator small />}
+          </Button>
         )}
       </div>
     </div>

@@ -13,7 +13,6 @@ function LoginPage(){
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-
   async function formSubmitted(e){
     e.preventDefault()
     setIsLoading(true)
@@ -36,35 +35,36 @@ function LoginPage(){
 
   return(
     <Container>
-      {isLoading && <LoadingIndicator/>}
-      {!isLoading && (
-        <div>
-          <h1>Entrar</h1>
-          <Form className="form"  onSubmit={formSubmitted} 
-          >
-            <Form.Group controlId="itemName">
-              <Form.Label>Email</Form.Label>
-              <Form.Control 
-                type="email" 
-                placeholder="Digite o email"
-                value={email} 
-                onChange={ e => setEmail(e.target.value) }
-              />
-              <Form.Label>Senha</Form.Label>
-              <Form.Control 
-                type="password" 
-                placeholder="Digite a senha" 
-                value={ password } 
-                onChange={ e => setPassword(e.target.value) }
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Entrar
-            </Button><br/><br/>
-            <Link to="/users/signup">Não tem uma conta? Click aqui</Link>
-          </Form>
-        </div>
-      )}
+      <h1>Entrar</h1>
+      <Form className="form" onSubmit={formSubmitted} >
+        <Form.Group controlId="itemName">
+          <Form.Label>Email</Form.Label>
+          <Form.Control 
+            type="email" 
+            placeholder="Digite o email"
+            value={email} 
+            onChange={ e => setEmail(e.target.value) }
+          />
+          <Form.Label>Senha</Form.Label>
+          <Form.Control 
+            type="password" 
+            placeholder="Digite a senha" 
+            value={ password } 
+            onChange={ e => setPassword(e.target.value) }
+          />
+        </Form.Group>
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading && <LoadingIndicator small />}
+          {isLoading ? ' Entrando' : 'Entrar'}
+        </Button>
+        <br />
+        <br />
+        <Link to="/users/signup">Não tem uma conta? Click aqui</Link>
+      </Form>
     </Container>
   )
 }

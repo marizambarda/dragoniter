@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Image } from "react-bootstrap";
 import { useAppContext} from "../../AppContext";
@@ -15,13 +15,55 @@ function PageMenu(){
     menu = <LoggedOutMenu/>
   }
 
+  return( 
+    <div>
+      <DesktopMenu menu={menu}/>
+      <MobileMenu menu={menu}/>
+    </div>
+  )
+}
+
+function DesktopMenu({menu}){
   return(
-    <div className="menuSection">
+    <div className="desktopMenu">
       <div className="menu">
         {menu}
       </div>
     </div>
   )
+}
+
+function MobileMenu({menu}){
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  async function toggleMenu(e){
+    e.preventDefault()
+    setMenuOpen(!menuOpen)
+  }
+
+  return (
+    <div className="mobileMenuHeader ">
+      <h1>Twitter</h1>
+      <a 
+        href="#" 
+        onClick={toggleMenu} 
+        className={menuOpen ? 'mobileMenuIcon open' : 'mobileMenuIcon'}
+      >
+        <div>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </a>
+    
+      {menuOpen && (
+        <div className="mobileMenu">
+          {menu}
+        </div>
+      )}
+    </div>
+  )
+
 }
 
 function LoggedInMenu () {

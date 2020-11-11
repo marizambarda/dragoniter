@@ -20,7 +20,7 @@ router.post('/users', async function (req, res){
     res.json({error: "Nome muito pequeno, use no minímo 2 caracteres!"})
     return
   }
-  if(validateEmail(req.body.email) === false){
+  if(!validateEmail(req.body.email)){
     res.status(400)
     res.json({error: "Email inválido!"})
     return
@@ -39,7 +39,7 @@ router.post('/users', async function (req, res){
     res.json({error: "Este nome de usuário já está em uso!"})
     return
   }
-  if(validateNickname(req.body.nickname) === false){
+  if(!validateNickname(req.body.nickname)){
     res.status(400)
     res.json({error: "Nome de usuário inválido, utilize apenas letras (a-z ou A-Z), números e underline (_)"})
     return
@@ -130,7 +130,7 @@ router.put('/me', requireAuthentication, async function(req, res){
   }  
 
   if(fields.email){
-    if(validateEmail(fields.email) === false){
+    if(!validateEmail(fields.email)){
       res.status(400)
       res.json({error: "Email inválido!"})
       return
@@ -151,7 +151,7 @@ router.put('/me', requireAuthentication, async function(req, res){
       res.json({error: "Este nome de usuário já está em uso!"})
       return
     }
-    if(validateNickname(req.body.nickname) === false){
+    if(!validateNickname(req.body.nickname)){
       res.status(400)
       res.json({error: "Nome de usuário inválido, utilize apenas letras (a-z ou A-Z), números e underline (_)"})
       return

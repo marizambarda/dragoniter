@@ -15,7 +15,6 @@ function SignUpPage(){
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-
   async function formSubmitted(e){
     e.preventDefault()
     setIsLoading(true)
@@ -37,68 +36,70 @@ function SignUpPage(){
   }
   return(
     <Container>
-      {isLoading && <LoadingIndicator/>}
-      {!isLoading && (
-        <div>
-          <h1>Cadastrar-se</h1>
-          <Form className="form" onSubmit={formSubmitted}
-          >
-            <Form.Group controlId="itemName">
-            <Row> 
-              <Col>
-                <Form.Label>Nome</Form.Label>
-                <Form.Control 
-                  type="name" 
-                  placeholder="Digite o nome"
-                  value={name}
-                  onChange={ e => setName(e.target.value) }
-                />
-              </Col>
-              <Col>
-                <Form.Label>
-                  Nome de Usuário
-                </Form.Label>
-                <InputGroup>
-                  <InputGroup.Prepend>
-                    <InputGroup.Text>@</InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl id="inlineFormInputGroupUsername" 
-                  placeholder="Digite o nome de usuário" 
-                  value={nickname}
-                  onChange={ e => setNickname(e.target.value) }/>
-                </InputGroup>
-              </Col>
-            </Row>
+      <h1>Cadastrar-se</h1>
+      <Form className="form" onSubmit={formSubmitted}
+      >
+        <Form.Group controlId="itemName">
+        <Row> 
+          <Col>
+            <Form.Label>Nome</Form.Label>
+            <Form.Control 
+              type="name" 
+              placeholder="Digite o nome"
+              value={name}
+              onChange={ e => setName(e.target.value) }
+            />
+          </Col>
+          <Col>
+            <Form.Label>
+              Nome de Usuário
+            </Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>@</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl id="inlineFormInputGroupUsername" 
+              placeholder="Digite o nome de usuário" 
+              value={nickname}
+              onChange={ e => setNickname(e.target.value) }/>
+            </InputGroup>
+          </Col>
+        </Row>
+      
+        <Row>
+          <Col>
+          <Form.Label>Email</Form.Label>
+          <Form.Control 
+            type="email" 
+            placeholder="Digite o email"
+            value={email}
+            onChange={ e => setEmail(e.target.value) }
+          />
+          </Col>
+          <Col> 
+          <Form.Label>Senha</Form.Label>
+          <Form.Control 
+            type="password" 
+            placeholder="Digite a senha"  
+            value={password}
+            onChange={ e => setPassword(e.target.value) }
+          />
+          </Col>
+        </Row>
           
-            <Row>
-              <Col>
-              <Form.Label>Email</Form.Label>
-              <Form.Control 
-                type="email" 
-                placeholder="Digite o email"
-                value={email}
-                onChange={ e => setEmail(e.target.value) }
-              />
-              </Col>
-              <Col> 
-              <Form.Label>Senha</Form.Label>
-              <Form.Control 
-                type="password" 
-                placeholder="Digite a senha"  
-                value={password}
-                onChange={ e => setPassword(e.target.value) }
-              />
-              </Col>
-            </Row>
-              
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Entrar
-            </Button><br/><br/>
-            <Link to="/users/login">Já tem uma conta? Click aqui</Link>
-          </Form>
-        </div>
-      )}
+        </Form.Group>
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading && <LoadingIndicator small />}
+          {isLoading ? ' Carregando' : 'Cadastrar'}
+        </Button>
+        <br />
+        <br />
+        <Link to="/users/login">Já tem uma conta? Click aqui</Link>
+      </Form>
     </Container>
   )
 }
