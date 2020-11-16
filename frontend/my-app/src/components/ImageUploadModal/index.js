@@ -1,2 +1,2 @@
-import Page from './ImageUploadModal.jsx'
+import Page from './ImageUploadModal.jsx';
 export default Page;

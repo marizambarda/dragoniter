@@ -1,53 +1,50 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Row, Col, Image } from "react-bootstrap";
-import { useAppContext} from "../../AppContext";
-import ProfileImage from "../../components/ProfileImage";
-import "./PageMenu.scss";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Row, Col, Image } from 'react-bootstrap';
+import { useAppContext } from '../../AppContext';
+import ProfileImage from '../../components/ProfileImage';
+import './PageMenu.scss';
 
-
-function PageMenu(){
-  const {loggedUser} = useAppContext()
-  let menu
+function PageMenu() {
+  const { loggedUser } = useAppContext();
+  let menu;
 
   if (loggedUser) {
-    menu = <LoggedInMenu/>
+    menu = <LoggedInMenu />;
   } else {
-    menu = <LoggedOutMenu/>
-  }
-
-  return( 
-    <div>
-      <DesktopMenu menu={menu}/>
-      <MobileMenu menu={menu}/>
-    </div>
-  )
-}
-
-function DesktopMenu({menu}){
-  return(
-    <div className="desktopMenu">
-      <div className="menu">
-        {menu}
-      </div>
-    </div>
-  )
-}
-
-function MobileMenu({menu}){
-  const [menuOpen, setMenuOpen] = useState(false)
-
-  async function toggleMenu(e){
-    e.preventDefault()
-    setMenuOpen(!menuOpen)
+    menu = <LoggedOutMenu />;
   }
 
   return (
-    <div className="mobileMenuHeader ">
+    <div>
+      <DesktopMenu menu={menu} />
+      <MobileMenu menu={menu} />
+    </div>
+  );
+}
+
+function DesktopMenu({ menu }) {
+  return (
+    <div className="desktopMenu">
+      <div className="menu">{menu}</div>
+    </div>
+  );
+}
+
+function MobileMenu({ menu }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  async function toggleMenu(e) {
+    e.preventDefault();
+    setMenuOpen(!menuOpen);
+  }
+
+  return (
+    <div className="mobileMenuHeader">
       <h1>Twitter</h1>
-      <a 
-        href="#" 
-        onClick={toggleMenu} 
+      <a
+        href="#"
+        onClick={toggleMenu}
         className={menuOpen ? 'mobileMenuIcon open' : 'mobileMenuIcon'}
       >
         <div>
@@ -56,61 +53,74 @@ function MobileMenu({menu}){
           <span></span>
         </div>
       </a>
-    
-      {menuOpen && (
-        <div className="mobileMenu">
-          {menu}
-        </div>
-      )}
-    </div>
-  )
 
+      {menuOpen && <div className="mobileMenu">{menu}</div>}
+    </div>
+  );
 }
 
-function LoggedInMenu () {
-  const {loggedUser} = useAppContext()
+function LoggedInMenu() {
+  const { loggedUser } = useAppContext();
 
-  async function logout(e){
-    e.preventDefault()
+  async function logout(e) {
+    e.preventDefault();
     if (window.confirm('Deseja sair?')) {
-      localStorage.removeItem("access_token")
-      window.location.reload()
+      localStorage.removeItem('access_token');
+      window.location.reload();
     }
   }
 
   return (
     <>
-      <Link to={`/${loggedUser.nickname}`}><ProfileImage className="perfilImage" src={loggedUser.avatar_url} /></Link>
+      <Link to={`/${loggedUser.nickname}`}>
+        <ProfileImage className="perfilImage" src={loggedUser.avatar_url} />
+      </Link>
       <Row>
-        <Col><Link to={"/"}>Página Inicial</Link></Col>
+        <Col>
+          <Link to={'/'}>Página Inicial</Link>
+        </Col>
       </Row>
       <Row>
-        <Col><Link to={`/mentions`}>Menções</Link></Col>
+        <Col>
+          <Link to={`/mentions`}>Menções</Link>
+        </Col>
       </Row>
       <Row>
-        <Col><Link to={`/${loggedUser.nickname}`}>Perfil</Link></Col>
+        <Col>
+          <Link to={`/${loggedUser.nickname}`}>Perfil</Link>
+        </Col>
       </Row>
       <Row>
-        <Col><Link to={`/editprofile`}>Editar Informações</Link></Col>
+        <Col>
+          <Link to={`/editprofile`}>Editar Informações</Link>
+        </Col>
       </Row>
       <Row>
-        <Col><a href={`#`} onClick={logout}>Sair</a></Col>
+        <Col>
+          <a href={`#`} onClick={logout}>
+            Sair
+          </a>
+        </Col>
       </Row>
     </>
-  )
+  );
 }
 
-function LoggedOutMenu () {
+function LoggedOutMenu() {
   return (
     <>
       <Row>
-        <Col><Link to="/users/login">Login</Link></Col>
+        <Col>
+          <Link to="/users/login">Login</Link>
+        </Col>
       </Row>
       <Row>
-        <Col><Link to="/users/signup">Cadastrar</Link></Col>
+        <Col>
+          <Link to="/users/signup">Cadastrar</Link>
+        </Col>
       </Row>
     </>
-  )
+  );
 }
 
 export default PageMenu;

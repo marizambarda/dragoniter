@@ -1,2 +1,2 @@
-import Page from './PageWithMenu.jsx'
+import Page from './PageWithMenu.jsx';
 export default Page;

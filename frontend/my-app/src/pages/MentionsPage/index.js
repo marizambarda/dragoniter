@@ -1,2 +1,2 @@
-import Page from './MentionsPage.jsx'
+import Page from './MentionsPage.jsx';
 export default Page;

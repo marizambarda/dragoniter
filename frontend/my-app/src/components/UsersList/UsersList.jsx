@@ -1,19 +1,21 @@
-import React from "react";
-import { Image } from "react-bootstrap";
-import "./UsersList.scss";
-import { Link } from "react-router-dom";
-import ProfileImage from "../../components/ProfileImage";
+import React from 'react';
+import { Image } from 'react-bootstrap';
+import './UsersList.scss';
+import { Link } from 'react-router-dom';
+import ProfileImage from '../../components/ProfileImage';
 
-function UsersList({users}){
-  return(
+function UsersList({ users }) {
+  return (
     <div className="contentUserInformationsList">
-      {users.map(user=><User key={user.id} user={user}/>)}
+      {users.map((user) => (
+        <User key={user.id} user={user} />
+      ))}
     </div>
-  )
+  );
 }
 
-function User({ user }){
-  return(
+function User({ user }) {
+  return (
     <Link className="contentUserInformations" to={`/${user.nickname}`}>
       <div className="userAvatar">
         <ProfileImage src={user.avatar_url} />
@@ -23,9 +25,7 @@ function User({ user }){
         <div>@{user.nickname}</div>
       </div>
     </Link>
-  )
+  );
 }
-
-
 
 export default UsersList;

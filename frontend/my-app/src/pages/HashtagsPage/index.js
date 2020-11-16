@@ -1,2 +1,2 @@
-import Page from './HashtagsPage.jsx'
+import Page from './HashtagsPage.jsx';
 export default Page;

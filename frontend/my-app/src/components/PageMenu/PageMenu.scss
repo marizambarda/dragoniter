@@ -1,8 +1,6 @@
-
-
 .desktopMenu,
-.mobileMenu{
-  .perfilImage{
+.mobileMenu {
+  .perfilImage {
     width: 90px;
     height: 90px;
     border: 3px solid #f0ebeb;
@@ -10,44 +8,43 @@
     display: none;
   }
 }
-.desktopMenu{
+.desktopMenu {
   padding: 20px 0;
   display: none;
-  .menu a{
+  .menu a {
     color: #000;
     font-weight: bold;
     font-size: 20px;
 
-    &:hover{
+    &:hover {
       color: darken(#00acee, 3%);
       text-decoration: none;
     }
   }
 }
-.mobileMenuHeader{
+.mobileMenuHeader {
   height: 100px;
   border-bottom: 1px solid #ccc;
 }
-.mobileMenuHeader h1{
+.mobileMenuHeader h1 {
   color: #00acee;
   padding-top: 25px;
-
 }
-.mobileMenu{
+.mobileMenu {
   position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   z-index: 5;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0, 0, 0, 0.9);
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   color: #fff;
   padding: 20px;
   padding-top: 90px;
 }
 
-.mobileMenu .row{
+.mobileMenu .row {
   border-top: 1px solid #666;
 }
 .mobileMenu .row a {
@@ -59,21 +56,21 @@
 .mobileMenu .row:last-child {
   border-bottom: 1px solid #666;
 }
-.mobileMenu .social-media{
+.mobileMenu .social-media {
   text-align: center;
   padding-bottom: 20px;
 }
-.social-media-icon--menu-mobile{
+.social-media-icon--menu-mobile {
   width: 50px;
   height: 50px;
   font-size: 30px;
   margin-left: 30px;
 }
-.mobileMenu a{
+.mobileMenu a {
   font-size: 20px;
   color: #fff;
 
-  &:hover{
+  &:hover {
     color: #00acee;
     text-decoration: none;
   }
@@ -86,7 +83,7 @@
   right: 15px;
   z-index: 6;
 }
-.mobileMenuIcon div{
+.mobileMenuIcon div {
   width: 40px;
   height: 24px;
   position: relative;
@@ -94,13 +91,13 @@
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
   transform: rotate(0deg);
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
   cursor: pointer;
 }
-.mobileMenuIcon span{
+.mobileMenuIcon span {
   display: block;
   position: absolute;
   height: 6px;
@@ -113,33 +110,33 @@
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
   transform: rotate(0deg);
-  -webkit-transition: .25s ease-in-out;
-  -moz-transition: .25s ease-in-out;
-  -o-transition: .25s ease-in-out;
-  transition: .25s ease-in-out;
+  -webkit-transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -o-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
 }
-.mobileMenuIcon span:nth-child(1){
+.mobileMenuIcon span:nth-child(1) {
   top: 0px;
   -webkit-transform-origin: left center;
   -moz-transform-origin: left center;
   -o-transform-origin: left center;
   transform-origin: left center;
 }
-.mobileMenuIcon span:nth-child(2){
+.mobileMenuIcon span:nth-child(2) {
   top: 9px;
   -webkit-transform-origin: left center;
   -moz-transform-origin: left center;
   -o-transform-origin: left center;
   transform-origin: left center;
 }
-.mobileMenuIcon span:nth-child(3){
+.mobileMenuIcon span:nth-child(3) {
   top: 18px;
   -webkit-transform-origin: left center;
   -moz-transform-origin: left center;
   -o-transform-origin: left center;
   transform-origin: left center;
 }
-.mobileMenuIcon.open span:nth-child(1){
+.mobileMenuIcon.open span:nth-child(1) {
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
   -o-transform: rotate(45deg);
@@ -147,11 +144,11 @@
   top: -3px;
   left: 8px;
 }
-.mobileMenuIcon.open span:nth-child(2){
+.mobileMenuIcon.open span:nth-child(2) {
   width: 0%;
   opacity: 0;
 }
-.mobileMenuIcon.open span:nth-child(3){
+.mobileMenuIcon.open span:nth-child(3) {
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
@@ -160,22 +157,21 @@
   left: 8px;
 }
 
-
-@media (min-width: 992px){
-  .desktopMenu{
+@media (min-width: 992px) {
+  .desktopMenu {
     display: block;
   }
 
   .desktopMenu,
-  .mobileMenu{
-    .perfilImage{
+  .mobileMenu {
+    .perfilImage {
       display: block;
     }
   }
-  .mobileMenuIcon{
+  .mobileMenuIcon {
     display: none;
   }
-  .mobileMenuHeader{
+  .mobileMenuHeader {
     display: none;
   }
 }

@@ -1,47 +1,58 @@
-import React, { useState, useEffect } from "react";
-import api from "../../api";
-import { Link, useHistory } from "react-router-dom";
-import { Form, Button, Container, Row, Col, InputGroup, FormControl } from "react-bootstrap";
-import { useAppContext} from "../../AppContext";
-import "./SignUpPage.scss";
-import LoadingIndicator from "../../components/LoadingIndicator";
+import React, { useState, useEffect } from 'react';
+import api from '../../api';
+import { Link, useHistory } from 'react-router-dom';
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  InputGroup,
+  FormControl,
+} from 'react-bootstrap';
+import { useAppContext } from '../../AppContext';
+import './SignUpPage.scss';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-function SignUpPage(){
-  const {setIsLoggedIn} = useAppContext()
+function SignUpPage() {
+  const { setIsLoggedIn } = useAppContext();
   const history = useHistory();
-  const [name, setName] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [passwordConfirmationMismatch, setPasswordConfirmationMismatch] = useState(false)
+  const [name, setName] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [
+    passwordConfirmationMismatch,
+    setPasswordConfirmationMismatch,
+  ] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
-  async function formSubmitted(e){
-    e.preventDefault()
-    if(password !== confirmPassword){
-      setPasswordConfirmationMismatch(true)
-      return
+  async function formSubmitted(e) {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setPasswordConfirmationMismatch(true);
+      return;
     }
-    setIsLoading(true)
+    setIsLoading(true);
     const response = await api.post(`/users`, {
       name: name,
       nickname: nickname,
       email: email,
-      password: password
-    })
-    setIsLoading(false)
+      password: password,
+    });
+    setIsLoading(false);
 
     if (response.ok) {
-      localStorage.setItem("access_token", response.data.access_token)
-      setIsLoggedIn(true)
-      history.push("/")
+      localStorage.setItem('access_token', response.data.access_token);
+      setIsLoggedIn(true);
+      history.push('/');
     } else {
-      alert(response.data.error)
+      alert(response.data.error);
     }
   }
-  return(
+  return (
     <Container className="signupPage">
       <Row>
         <Col md={{ span: 6, offset: 3 }}>
@@ -49,58 +60,58 @@ function SignUpPage(){
           <Form className="form" onSubmit={formSubmitted}>
             <Form.Group controlId="itemName">
               <Form.Label>Nome</Form.Label>
-              <Form.Control 
-                type="name" 
+              <Form.Control
+                type="name"
                 placeholder="Digite o nome"
                 value={name}
-                onChange={ e => setName(e.target.value) }
+                onChange={(e) => setName(e.target.value)}
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>
-                Nome de Usuário
-              </Form.Label>
+              <Form.Label>Nome de Usuário</Form.Label>
               <InputGroup>
                 <InputGroup.Prepend>
                   <InputGroup.Text>@</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl id="inlineFormInputGroupUsername" 
-                  placeholder="Digite o nome de usuário" 
+                <FormControl
+                  id="inlineFormInputGroupUsername"
+                  placeholder="Digite o nome de usuário"
                   value={nickname}
-                  onChange={ e => setNickname(e.target.value) }/>
+                  onChange={(e) => setNickname(e.target.value)}
+                />
               </InputGroup>
             </Form.Group>
             <Form.Group>
               <Form.Label>Email</Form.Label>
-              <Form.Control 
-                type="email" 
+              <Form.Control
+                type="email"
                 placeholder="Digite o email"
                 value={email}
-                onChange={ e => setEmail(e.target.value) }
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
             <Form.Group>
               <Form.Label>Senha</Form.Label>
-              <Form.Control 
-                type="password" 
-                placeholder="Digite a senha"  
+              <Form.Control
+                type="password"
+                placeholder="Digite a senha"
                 value={password}
-                onChange={e => {
-                  setPassword(e.target.value)
-                  setPasswordConfirmationMismatch(false)
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordConfirmationMismatch(false);
                 }}
               />
             </Form.Group>
             <Form.Group>
               <Form.Label>Confirmar a senha</Form.Label>
-              <Form.Control 
-                type="password" 
-                placeholder="Confirmar a senha"  
+              <Form.Control
+                type="password"
+                placeholder="Confirmar a senha"
                 value={confirmPassword}
                 isInvalid={passwordConfirmationMismatch}
-                onChange={e => {
-                  setConfirmPassword(e.target.value)
-                  setPasswordConfirmationMismatch(false)
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  setPasswordConfirmationMismatch(false);
                 }}
               />
               <Form.Control.Feedback type="invalid">
@@ -124,8 +135,7 @@ function SignUpPage(){
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
-
 
 export default SignUpPage;

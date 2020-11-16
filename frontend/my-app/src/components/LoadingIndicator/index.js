@@ -1,2 +1,2 @@
-import Page from './LoadingIndicator.jsx'
+import Page from './LoadingIndicator.jsx';
 export default Page;

@@ -1,2 +1,2 @@
-import Page from './ProfileImage.jsx'
+import Page from './ProfileImage.jsx';
 export default Page;

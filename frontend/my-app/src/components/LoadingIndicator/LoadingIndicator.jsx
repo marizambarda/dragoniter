@@ -1,8 +1,8 @@
-import React from 'react'
-import { Spinner } from "react-bootstrap";
-import './LoadingIndicator.scss'
+import React from 'react';
+import { Spinner } from 'react-bootstrap';
+import './LoadingIndicator.scss';
 
-function LoadingIndicator ({ small }) {
+function LoadingIndicator({ small }) {
   if (small) {
     return (
       <Spinner
@@ -12,7 +12,7 @@ function LoadingIndicator ({ small }) {
         role="status"
         aria-hidden="true"
       />
-    )
+    );
   } else {
     return (
       <div className="loadingIndicator">
@@ -27,8 +27,8 @@ function LoadingIndicator ({ small }) {
           <div></div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default LoadingIndicator
+export default LoadingIndicator;

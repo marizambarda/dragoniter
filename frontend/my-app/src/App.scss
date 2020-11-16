@@ -1,4 +1,4 @@
-.pagePadding{
+.pagePadding {
   padding: 20px;
 }
 
@@ -7,31 +7,31 @@
   font-size: 25px;
 }
 
-.editUserPage{
+.editUserPage {
   padding-left: 0;
 }
 .loginPage h1,
-.signupPage h1{
+.signupPage h1 {
   text-align: center;
   padding-top: 20px;
 }
 
-.btn.btn-primary{
+.btn.btn-primary {
   background-color: #00acee;
   border-color: #00acee;
 
-  &:hover{
+  &:hover {
     background-color: darken(#00acee, 3%);
     border-color: darken(#00acee, 3%);
   }
 }
 
-.btn.btn-secondary{
+.btn.btn-secondary {
   background-color: #fff;
   color: #00acee;
   border-color: #00acee;
 
-  &:hover{
+  &:hover {
     background-color: darken(#00acee, 3%);
     border-color: darken(#00acee, 3%);
     color: #fff;

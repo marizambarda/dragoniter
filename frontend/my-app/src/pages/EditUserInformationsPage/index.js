@@ -1,2 +1,2 @@
-import Page from './EditUserInformationsPage.jsx'
+import Page from './EditUserInformationsPage.jsx';
 export default Page;

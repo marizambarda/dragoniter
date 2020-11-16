@@ -1,59 +1,58 @@
-.postsList{
+.postsList {
   border-top: 1px solid #ccc;
 }
-.postsList .post{
+.postsList .post {
   border-bottom: 1px solid #ccc;
   padding: 10px 20px;
   display: flex;
 
-  .postAvatar img{
+  .postAvatar img {
     width: 50px;
     height: 50px;
     background-color: #ddd;
     margin-right: 10px;
   }
-  .postContent{
+  .postContent {
     flex-grow: 1;
   }
-  .userNamePostTimeline{
+  .userNamePostTimeline {
     font-size: 18px;
     font-weight: bold;
   }
-  .userNamePostTimeline a{
+  .userNamePostTimeline a {
     color: #000;
 
-    &:hover{
+    &:hover {
       text-decoration: none;
       color: #00acee;
     }
   }
-  .timelineUserNickname{
+  .timelineUserNickname {
     padding-top: 0px;
     font-size: 14px;
     font-weight: none;
     color: rgb(194, 191, 191);
   }
-  .btnDeletePost{
+  .btnDeletePost {
     float: right;
     margin-top: 8px;
-    
   }
-  .linkMentionUser{
+  .linkMentionUser {
     color: #00acee;
     text-decoration: none;
 
-    &:hover{
-      color:  darken(#00acee, 10%);
+    &:hover {
+      color: darken(#00acee, 10%);
     }
   }
-  .replyIcon{
+  .replyIcon {
     color: #ccd0d3;
 
-    &:hover{
-      color: #aeaeaf ;
+    &:hover {
+      color: #aeaeaf;
     }
   }
-  .showTime{
+  .showTime {
     color: rgb(197, 194, 194);
     font-size: 14px;
   }

@@ -1,17 +1,17 @@
-.contentUserInformationsList{
+.contentUserInformationsList {
   border-top: 1px solid #ccc;
 }
-.contentUserInformations{
+.contentUserInformations {
   display: flex;
   border-bottom: 1px solid #ccc;
   padding: 10px 20px;
   color: #000;
 
-  &:hover{
+  &:hover {
     color: #00acee;
     text-decoration: none;
   }
-  .userAvatar img{
+  .userAvatar img {
     width: 50px;
     height: 50px;
     background-color: #ddd;
@@ -19,9 +19,6 @@
   }
 }
 
-.userIdentification .userName{
+.userIdentification .userName {
   font-weight: bold;
 }
-
-
-

@@ -1,2 +1,2 @@
-import Page from './ForgotPasswordPage.jsx'
+import Page from './ForgotPasswordPage.jsx';
 export default Page;
