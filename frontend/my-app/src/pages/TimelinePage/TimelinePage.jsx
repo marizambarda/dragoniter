@@ -25,7 +25,7 @@ function TimelinePage() {
   return (
     <div className="timelinePage">
       <PageWithMenu>
-        <div class="createPostFormContainer">
+        <div className="createPostFormContainer">
           <CreatePostForm defaultText={''} buttonText={'Twittar'} />
         </div>
         {isLoading && <LoadingIndicator />}

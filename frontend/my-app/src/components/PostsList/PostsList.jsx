@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import './PostsList.scss';
 import api from '../../api';
 import { Link } from 'react-router-dom';
@@ -96,7 +96,7 @@ function Post({ post }) {
 function PostBody({ body }) {
   const words = body.split(' ');
 
-  return words.map((word) => {
+  return words.map((word, index) => {
     let returnedWord;
 
     if (word[0] === '@') {
@@ -115,7 +115,7 @@ function PostBody({ body }) {
       returnedWord = word;
     }
 
-    return <>{returnedWord} </>;
+    return <Fragment key={index}>{returnedWord}</Fragment>;
   });
 }
 
