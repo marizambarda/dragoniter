@@ -98,7 +98,6 @@ function ProfileHeaderCover ({ user, isMe }) {
 
 function ProfileHeaderAvatar ({ user, isMe  }) {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
-
   return (
     <div>
       <Image className="profileAvatar" src={user.avatar_url} roundedCircle/>

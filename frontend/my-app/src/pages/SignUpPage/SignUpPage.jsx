@@ -13,10 +13,17 @@ function SignUpPage(){
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [passwordConfirmationMismatch, setPasswordConfirmationMismatch] = useState(false)
+
   const [isLoading, setIsLoading] = useState(false);
 
   async function formSubmitted(e){
     e.preventDefault()
+    if(password !== confirmPassword){
+      setPasswordConfirmationMismatch(true)
+      return
+    }
     setIsLoading(true)
     const response = await api.post(`/users`, {
       name: name,
@@ -78,8 +85,27 @@ function SignUpPage(){
                 type="password" 
                 placeholder="Digite a senha"  
                 value={password}
-                onChange={ e => setPassword(e.target.value) }
+                onChange={e => {
+                  setPassword(e.target.value)
+                  setPasswordConfirmationMismatch(false)
+                }}
               />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Confirmar a senha</Form.Label>
+              <Form.Control 
+                type="password" 
+                placeholder="Confirmar a senha"  
+                value={confirmPassword}
+                isInvalid={passwordConfirmationMismatch}
+                onChange={e => {
+                  setConfirmPassword(e.target.value)
+                  setPasswordConfirmationMismatch(false)
+                }}
+              />
+              <Form.Control.Feedback type="invalid">
+                As senhas são diferentes
+              </Form.Control.Feedback>
             </Form.Group>
             <Button
               variant="primary"

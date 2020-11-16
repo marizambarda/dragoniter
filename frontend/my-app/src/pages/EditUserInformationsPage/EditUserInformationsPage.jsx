@@ -10,7 +10,9 @@ function EditUserInformationsPage(){
   const [name, setName] = useState("")
   const [nickname, setNickname] = useState("")
   const [email,setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [passwordConfirmationMismatch, setPasswordConfirmationMismatch] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -24,6 +26,10 @@ function EditUserInformationsPage(){
   
   async function formSubmited(e){
     e.preventDefault()
+    if(password !== confirmPassword){
+      setPasswordConfirmationMismatch(true)
+      return
+    }
     setShowSuccessMessage(false)
 
     const data = {
@@ -86,7 +92,7 @@ function EditUserInformationsPage(){
           </Row>
         
           <Row>
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={12}>
               <Form.Group>
                 <Form.Label>
                   Email
@@ -106,7 +112,24 @@ function EditUserInformationsPage(){
                   value={password} 
                   onChange={(e)=>setPassword(e.target.value)}
                   autoComplete={false}
+                />  
+              </Form.Group>
+            </Col>
+            <Col xs={12} sm={6}> 
+              <Form.Group>
+                <Form.Label>Confirmar a senha</Form.Label>
+                <Form.Control 
+                  type="password"
+                  value={confirmPassword}
+                  isInvalid={passwordConfirmationMismatch}
+                  onChange={e => {
+                    setConfirmPassword(e.target.value)
+                    setPasswordConfirmationMismatch(false)
+                  }}
                 />
+                <Form.Control.Feedback type="invalid">
+                  As senhas são diferentes
+                </Form.Control.Feedback>
               </Form.Group>
             </Col>
           </Row>

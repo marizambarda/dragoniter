@@ -1,6 +1,6 @@
 const db = require('../db');
 const express = require('express');
-const { validateEmail, validateNickname } = require('./functions');
+const { validateEmail, validateNickname, generatePasswordRecoveryCode } = require('./functions');
 const router = express.Router();
 const { uuid } = require('uuidv4');
 const _ = require('lodash');
@@ -77,6 +77,7 @@ router.post('/users', async function (req, res){
   res.json(users[0])
 
 })
+
 
 router.post('/users/login', async function (req, res){
   const [users] = await db.query('SELECT * FROM users WHERE email = ?', [req.body.email])

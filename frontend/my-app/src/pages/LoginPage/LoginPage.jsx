@@ -47,6 +47,8 @@ function LoginPage(){
                 value={email} 
                 onChange={ e => setEmail(e.target.value) }
               />
+            </Form.Group>
+            <Form.Group>
               <Form.Label>Senha</Form.Label>
               <Form.Control 
                 type="password" 
@@ -67,6 +69,7 @@ function LoginPage(){
             <br />
             <br />
             <Link to="/users/signup">Não tem uma conta? Click aqui</Link>
+            <Link to="/forgotpassword" className="forgotPasswordLink">Esqueci minha senha</Link>
           </Form>
         </Col>
       </Row>

@@ -12,6 +12,7 @@ import HashtagsPage from "./pages/HashtagsPage";
 import EditUserInformationsPage from "./pages/EditUserInformationsPage";
 import FollowingPage from "./pages/FollowingPage";
 import FollowersPage from "./pages/FollowersPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import LoadingIndicator from "./components/LoadingIndicator";
 
 // Dependencies
@@ -45,6 +46,9 @@ function AppRouter(){
               </Route>
               <Route path="/users/signup">
                 <SignUpPage  />
+              </Route>
+              <Route path="/forgotpassword">
+                <ForgotPasswordPage />
               </Route>
               <AuthenticatedRoute path="/mentions" >
                 <MentionsPage />
