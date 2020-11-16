@@ -9,6 +9,8 @@ import { useAppContext} from "../../AppContext";
 import CreatePostForm from "../../components/CreatePostForm"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faCommentDots } from '@fortawesome/free-solid-svg-icons' 
+import ProfileImage from "../ProfileImage";
+
 
 function PostsList({posts}){
   return(
@@ -42,7 +44,7 @@ function Post({ post }){
 
       <div className="postAvatar">
         <Link to={`/${post.nickname}`}>
-          <img src={post.avatar_url} className="rounded-circle" />
+          <ProfileImage src={post.avatar_url} />
         </Link>
       </div>
       

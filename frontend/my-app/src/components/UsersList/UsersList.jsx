@@ -2,6 +2,7 @@ import React from "react";
 import { Image } from "react-bootstrap";
 import "./UsersList.scss";
 import { Link } from "react-router-dom";
+import ProfileImage from "../../components/ProfileImage";
 
 function UsersList({users}){
   return(
@@ -15,7 +16,7 @@ function User({ user }){
   return(
     <Link className="contentUserInformations" to={`/${user.nickname}`}>
       <div className="userAvatar">
-        <Image src={user.avatar_url} roundedCircle/>
+        <ProfileImage src={user.avatar_url} />
       </div>
       <div className="userIdentification">
         <div className="userName">{user.name}</div>

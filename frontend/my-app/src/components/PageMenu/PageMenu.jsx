@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Image } from "react-bootstrap";
 import { useAppContext} from "../../AppContext";
+import ProfileImage from "../../components/ProfileImage";
 import "./PageMenu.scss";
 
 
@@ -79,7 +80,7 @@ function LoggedInMenu () {
 
   return (
     <>
-      <Link to={`/${loggedUser.nickname}`}><Image className="perfilImage" src={loggedUser.avatar_url} roundedCircle /></Link>
+      <Link to={`/${loggedUser.nickname}`}><ProfileImage className="perfilImage" src={loggedUser.avatar_url} /></Link>
       <Row>
         <Col><Link to={"/"}>Página Inicial</Link></Col>
       </Row>

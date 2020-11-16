@@ -10,6 +10,7 @@ import ImageUploadModal from "../../components/ImageUploadModal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
 import LoadingIndicator from "../../components/LoadingIndicator";
+import ProfileImage from "../../components/ProfileImage";
 import { useAppContext } from "../../AppContext";
 
 function ProfilePage(){
@@ -100,7 +101,7 @@ function ProfileHeaderAvatar ({ user, isMe  }) {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
   return (
     <div>
-      <Image className="profileAvatar" src={user.avatar_url} roundedCircle/>
+      <ProfileImage className="profileAvatar" src={user.avatar_url}/>
       
       {isMe && (
         <Button variant="light" className="editAvatarButton " onClick={ ()=> setIsAvatarModalOpen(true)}><FontAwesomeIcon icon={faCamera} /></Button>
