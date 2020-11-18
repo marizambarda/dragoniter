@@ -14,6 +14,7 @@ import ProfileImage from '../../components/ProfileImage';
 import { useAppContext } from '../../AppContext';
 
 function ProfilePage() {
+  const { isMe } = useAppContext();
   const { nickname } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
@@ -48,6 +49,18 @@ function ProfilePage() {
           <div>
             <ProfileHeader user={user} />
             <PostsList posts={posts} />
+
+            {posts.length === 0 && (
+              <div className="doesntHaveInformation">
+                {isMe(user) && (
+                  <div>
+                    Você ainda não possui twitts!{' '}
+                    <Link to={'/'}>Clique aqui para twittar</Link>
+                  </div>
+                )}
+                {!isMe(user) && <div>Esse usuário ainda não possui twitts</div>}
+              </div>
+            )}
           </div>
         )}
       </PageWithMenu>
@@ -56,19 +69,17 @@ function ProfilePage() {
 }
 
 function ProfileHeader({ user }) {
-  const { loggedUser } = useAppContext();
-  const isMe = loggedUser && user.id === loggedUser.id;
-
   return (
     <div>
-      <ProfileHeaderCover user={user} isMe={isMe} />
-      <ProfileHeaderAvatar user={user} isMe={isMe} />
-      <ProfileHeaderUserInformation user={user} isMe={isMe} />
+      <ProfileHeaderCover user={user} />
+      <ProfileHeaderAvatar user={user} />
+      <ProfileHeaderUserInformation user={user} />
     </div>
   );
 }
 
-function ProfileHeaderCover({ user, isMe }) {
+function ProfileHeaderCover({ user }) {
+  const { isMe } = useAppContext();
   const [isCoverModalOpen, setIsCoverModalOpen] = useState(false);
 
   return (
@@ -77,7 +88,7 @@ function ProfileHeaderCover({ user, isMe }) {
         className="profileCover"
         style={{ backgroundImage: `url("${user.cover_url}")` }}
       >
-        {isMe && (
+        {isMe(user) && (
           <Button
             variant="light"
             size="sm"
@@ -89,7 +100,7 @@ function ProfileHeaderCover({ user, isMe }) {
         )}
       </div>
 
-      {isMe && (
+      {isMe(user) && (
         <ImageUploadModal
           userFieldName="cover_url"
           show={isCoverModalOpen}
@@ -100,13 +111,14 @@ function ProfileHeaderCover({ user, isMe }) {
   );
 }
 
-function ProfileHeaderAvatar({ user, isMe }) {
+function ProfileHeaderAvatar({ user }) {
+  const { isMe } = useAppContext();
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   return (
     <div>
       <ProfileImage className="profileAvatar" src={user.avatar_url} />
 
-      {isMe && (
+      {isMe(user) && (
         <Button
           variant="light"
           className="editAvatarButton "
@@ -116,7 +128,7 @@ function ProfileHeaderAvatar({ user, isMe }) {
         </Button>
       )}
 
-      {isMe && (
+      {isMe(user) && (
         <ImageUploadModal
           userFieldName="avatar_url"
           show={isAvatarModalOpen}
@@ -127,7 +139,8 @@ function ProfileHeaderAvatar({ user, isMe }) {
   );
 }
 
-function ProfileHeaderUserInformation({ user, isMe }) {
+function ProfileHeaderUserInformation({ user }) {
+  const { isMe } = useAppContext();
   const { loggedUser } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -159,12 +172,12 @@ function ProfileHeaderUserInformation({ user, isMe }) {
         </Link>
       </div>
       <div className="buttons">
-        {loggedUser && !isMe && !user.followedByMe && (
+        {loggedUser && !isMe(user) && !user.followedByMe && (
           <Button variant="secondary" onClick={follow} disabled={isLoading}>
             {isLoading ? <LoadingIndicator small /> : 'Seguir'}
           </Button>
         )}
-        {!isMe && user.followedByMe && (
+        {!isMe(user) && user.followedByMe && (
           <Button variant="primary" onClick={unFollow} disabled={isLoading}>
             {isLoading ? <LoadingIndicator small /> : 'Seguindo'}
           </Button>

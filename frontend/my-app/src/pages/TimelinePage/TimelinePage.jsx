@@ -5,6 +5,7 @@ import PageWithMenu from '../../components/PageWithMenu';
 import PostsList from '../../components/PostsList';
 import CreatePostForm from '../../components/CreatePostForm';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import Search from '../../components/Search';
 
 function TimelinePage() {
   const [posts, setPosts] = useState([]);
@@ -26,10 +27,21 @@ function TimelinePage() {
     <div className="timelinePage">
       <PageWithMenu>
         <div className="createPostFormContainer">
+          <Search />
           <CreatePostForm defaultText={''} buttonText={'Twittar'} />
         </div>
         {isLoading && <LoadingIndicator />}
-        {!isLoading && <PostsList posts={posts} />}
+        {!isLoading && (
+          <div>
+            <PostsList posts={posts} />
+            {posts.lenght === 0 && (
+              <div className="doesntHaveInformation">
+                Você ainda não possui twiites, siga outros usuários ou twitte
+                algo.
+              </div>
+            )}
+          </div>
+        )}
       </PageWithMenu>
     </div>
   );

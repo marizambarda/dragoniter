@@ -20,6 +20,11 @@ function HashtagsPage() {
     <PageWithMenu>
       <h1 className="pageTitle">#{hashtag}</h1>
       <PostsList posts={posts} />
+      {posts.length === 0 && (
+        <div className="doesntHaveInformation">
+          Essa hashtag não possui nenhum post no momento
+        </div>
+      )}
     </PageWithMenu>
   );
 }

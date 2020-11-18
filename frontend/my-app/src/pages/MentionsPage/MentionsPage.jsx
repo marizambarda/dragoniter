@@ -8,7 +8,6 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 function MentionsPage() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     async function loadMentions() {
       setIsLoading(true);
@@ -25,6 +24,11 @@ function MentionsPage() {
         <div>
           <h1 className="pageTitle">Menções</h1>
           <PostsList posts={posts} />
+          {posts.length === 0 && (
+            <div className="doesntHaveInformation">
+              Você ainda não possui menções
+            </div>
+          )}
         </div>
       )}
     </PageWithMenu>

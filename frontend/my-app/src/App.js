@@ -5,6 +5,7 @@ import AppContextProvider, { useAppContext } from './AppContext';
 // Pages
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
+import SearchPage from './pages/SearchPage';
 import TimelinePage from './pages/TimelinePage';
 import ProfilePage from './pages/ProfilePage';
 import MentionsPage from './pages/MentionsPage';
@@ -54,6 +55,9 @@ function AppRouter() {
             </Route>
             <AuthenticatedRoute path="/mentions">
               <MentionsPage />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path="/search">
+              <SearchPage />
             </AuthenticatedRoute>
             <Route path="/hashtags/:hashtag">
               <HashtagsPage />

@@ -22,10 +22,9 @@ function PostsList({ posts }) {
 }
 
 function Post({ post }) {
-  const { loggedUser } = useAppContext();
+  const { loggedUser, isMe } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
   const [reply, setReply] = useState(false);
-  const isMe = loggedUser && post.user_id === loggedUser.id;
 
   async function toggleReplyForm(e) {
     e.preventDefault();
@@ -77,7 +76,7 @@ function Post({ post }) {
       </div>
 
       <div>
-        {isMe && (
+        {isMe(post.user_id) && (
           <Button
             disabled={isLoading}
             className="btnDeletePost"
@@ -115,7 +114,9 @@ function PostBody({ body }) {
       returnedWord = word;
     }
 
-    return <Fragment key={index}>{returnedWord}</Fragment>;
+    // não remover espaço após o {returnedWord}, caso contrário
+    // os espaços do tweet serao removidos
+    return <Fragment key={index}>{returnedWord} </Fragment>;
   });
 }
 

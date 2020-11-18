@@ -7,8 +7,14 @@ export default function AppContextProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem('access_token') !== null
   );
+
   const [loggedUser, setLoggedUser] = useState(null);
   const [isLoadingLoggedUser, setIsLoadingLoggedUser] = useState(false);
+
+  function isMe(user) {
+    const userId = user && user.id ? user.id : user;
+    return loggedUser && userId === loggedUser.id;
+  }
 
   useEffect(() => {
     async function getData() {
@@ -30,6 +36,7 @@ export default function AppContextProvider({ children }) {
         loggedUser,
         setLoggedUser,
         isLoadingLoggedUser,
+        isMe,
       }}
     >
       {children}

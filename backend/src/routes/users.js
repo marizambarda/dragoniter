@@ -3,7 +3,7 @@ const express = require('express');
 const {
   validateEmail,
   validateNickname,
-  generatePasswordRecoveryCode,
+  generatePasswordRecoveryCode
 } = require('./functions');
 const router = express.Router();
 const { uuid } = require('uuidv4');
@@ -13,7 +13,7 @@ const bcrypt = require('bcrypt');
 const { catchAsyncErrorsOnRouter } = require('express-async-await-errors');
 const {
   allowAuthentication,
-  requireAuthentication,
+  requireAuthentication
 } = require('../middlewares');
 catchAsyncErrorsOnRouter(router);
 
@@ -45,9 +45,9 @@ router.post('/users', async function (req, res) {
   }
 
   const [
-    usersWithNickname,
+    usersWithNickname
   ] = await db.query('SELECT * FROM users WHERE nickname = ?', [
-    req.body.nickname,
+    req.body.nickname
   ]);
   if (usersWithNickname.length > 0) {
     res.status(400);
@@ -58,21 +58,21 @@ router.post('/users', async function (req, res) {
     res.status(400);
     res.json({
       error:
-        'Nome de usuário inválido, utilize apenas letras (a-z ou A-Z), números e underline (_)',
+        'Nome de usuário inválido, utilize apenas letras (a-z ou A-Z), números e underline (_)'
     });
     return;
   }
   if (req.body.nickname.length < 5) {
     res.status(400);
     res.json({
-      error: 'Nome de usuário muito pequeno, use no minímo 5 caracteres!',
+      error: 'Nome de usuário muito pequeno, use no minímo 5 caracteres!'
     });
     return;
   }
   if (req.body.nickname.length > 15) {
     res.status(400);
     res.json({
-      error: 'Nome de usuário muito grande, use no máximo 15 caracteres!',
+      error: 'Nome de usuário muito grande, use no máximo 15 caracteres!'
     });
     return;
   }
@@ -94,20 +94,30 @@ router.post('/users', async function (req, res) {
   }
   const passwordHash = await bcrypt.hash(req.body.password, 10);
   const [
-    result,
+    result
   ] = await db.query(
     'INSERT INTO users(name, email, nickname, password, access_token) VALUES (?, ?, ?, ?, ?)',
     [req.body.name, req.body.email, req.body.nickname, passwordHash, uuid()]
   );
   const [users] = await db.query('SELECT * FROM users WHERE id = ?', [
-    result.insertId,
+    result.insertId
   ]);
   res.json(users[0]);
 });
 
+router.get('/users/search', async function (req, res) {
+  const [
+    users
+  ] = await db.query(
+    'SELECT nickname, name, avatar_url FROM users WHERE nickname LIKE ? OR name LIKE ? ',
+    [`%${req.query.term}%`, `%${req.query.term}%`]
+  );
+  res.json(users);
+});
+
 router.post('/users/login', async function (req, res) {
   const [users] = await db.query('SELECT * FROM users WHERE email = ?', [
-    req.body.email,
+    req.body.email
   ]);
   if (users.length === 1) {
     const isPasswordCorrect = await bcrypt.compare(
@@ -129,7 +139,7 @@ router.get('/me', requireAuthentication, async function (req, res) {
 
 router.get('/users/:nickname', allowAuthentication, async function (req, res) {
   const [
-    users,
+    users
   ] = await db.query(
     'SELECT id, name, nickname, avatar_url, cover_url FROM users WHERE nickname = ?',
     [req.params.nickname]
@@ -141,7 +151,7 @@ router.get('/users/:nickname', allowAuthentication, async function (req, res) {
   const user = users[0];
 
   const [
-    followers,
+    followers
   ] = await db.query(
     'SELECT COUNT (*) AS count FROM followers WHERE following_id = ?',
     [user.id]
@@ -149,7 +159,7 @@ router.get('/users/:nickname', allowAuthentication, async function (req, res) {
   user.followers = followers[0].count;
 
   const [
-    following,
+    following
   ] = await db.query(
     'SELECT COUNT (*) AS count FROM followers WHERE follower_id = ?',
     [user.id]
@@ -158,7 +168,7 @@ router.get('/users/:nickname', allowAuthentication, async function (req, res) {
 
   if (req.user) {
     const [
-      followedByMe,
+      followedByMe
     ] = await db.query(
       'SELECT * FROM followers WHERE follower_id = ? AND following_id = ?',
       [req.user.id, user.id]
@@ -176,7 +186,7 @@ router.put('/me', requireAuthentication, async function (req, res) {
     'email',
     'password',
     'avatar_url',
-    'cover_url',
+    'cover_url'
   ]);
 
   if (fields.name) {
@@ -200,10 +210,10 @@ router.put('/me', requireAuthentication, async function (req, res) {
     }
 
     const [
-      usersWithEmail,
+      usersWithEmail
     ] = await db.query('SELECT * FROM users WHERE email = ? AND id != ?', [
       fields.email,
-      req.user.id,
+      req.user.id
     ]);
     if (usersWithEmail.length > 0) {
       res.status(400);
@@ -214,10 +224,10 @@ router.put('/me', requireAuthentication, async function (req, res) {
 
   if (fields.nickname) {
     const [
-      usersWithNickname,
+      usersWithNickname
     ] = await db.query('SELECT * FROM users WHERE nickname = ? AND id != ?', [
       fields.nickname,
-      req.user.id,
+      req.user.id
     ]);
     if (usersWithNickname.length > 0) {
       res.status(400);
@@ -228,21 +238,21 @@ router.put('/me', requireAuthentication, async function (req, res) {
       res.status(400);
       res.json({
         error:
-          'Nome de usuário inválido, utilize apenas letras (a-z ou A-Z), números e underline (_)',
+          'Nome de usuário inválido, utilize apenas letras (a-z ou A-Z), números e underline (_)'
       });
       return;
     }
     if (fields.nickname.length < 5) {
       res.status(400);
       res.json({
-        error: 'Nome de usuário muito pequeno, use no minímo 5 caracteres!',
+        error: 'Nome de usuário muito pequeno, use no minímo 5 caracteres!'
       });
       return;
     }
     if (fields.nickname.length > 15) {
       res.status(400);
       res.json({
-        error: 'Nome de usuário muito grande, use no máximo 15 caracteres!',
+        error: 'Nome de usuário muito grande, use no máximo 15 caracteres!'
       });
       return;
     }
@@ -263,7 +273,7 @@ router.put('/me', requireAuthentication, async function (req, res) {
 
   await db.query('UPDATE users SET ? WHERE id = ?', [fields, req.user.id]);
   const [users] = await db.query('SELECT * FROM users WHERE id = ?', [
-    req.user.id,
+    req.user.id
   ]);
   res.json(users[0]);
 });
@@ -273,7 +283,7 @@ router.post('/users/:nickname/follow', requireAuthentication, async function (
   res
 ) {
   const [users] = await db.query('SELECT id FROM users WHERE nickname = ?', [
-    req.params.nickname,
+    req.params.nickname
   ]);
   if (users.length === 0) {
     res.status(404).end();
@@ -281,7 +291,7 @@ router.post('/users/:nickname/follow', requireAuthentication, async function (
   }
   const userToFollow = users[0];
   const [
-    following,
+    following
   ] = await db.query(
     'SELECT * FROM followers WHERE follower_id = ? AND following_id = ?',
     [req.user.id, userToFollow.id]
@@ -297,7 +307,7 @@ router.post('/users/:nickname/follow', requireAuthentication, async function (
 
 router.get('/users/:nickname/following', async function (req, res) {
   const [users] = await db.query('SELECT id FROM users WHERE nickname = ?', [
-    req.params.nickname,
+    req.params.nickname
   ]);
   if (users.length === 0) {
     res.status(404).end();
@@ -317,7 +327,7 @@ router.get('/users/:nickname/following', async function (req, res) {
 
 router.get('/users/:nickname/followers', async function (req, res) {
   const [users] = await db.query('SELECT id FROM users WHERE nickname = ?', [
-    req.params.nickname,
+    req.params.nickname
   ]);
   if (users.length === 0) {
     res.status(404).end();
@@ -340,7 +350,7 @@ router.delete('/users/:nickname/follow', requireAuthentication, async function (
   res
 ) {
   const [users] = await db.query('SELECT id FROM users WHERE nickname = ?', [
-    req.params.nickname,
+    req.params.nickname
   ]);
   if (users.length === 0) {
     res.status(404).end();
