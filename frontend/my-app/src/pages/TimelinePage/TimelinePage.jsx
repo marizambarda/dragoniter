@@ -6,8 +6,10 @@ import PostsList from '../../components/PostsList';
 import CreatePostForm from '../../components/CreatePostForm';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Search from '../../components/Search';
+import { useHistory } from 'react-router-dom';
 
 function TimelinePage() {
+  const history = useHistory();
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,7 +29,7 @@ function TimelinePage() {
     <div className="timelinePage">
       <PageWithMenu>
         <div className="createPostFormContainer">
-          <Search />
+          <Search onSubmit={(term) => history.push(`/search?term=${term}`)} />
           <CreatePostForm defaultText={''} buttonText={'Twittar'} />
         </div>
         {isLoading && <LoadingIndicator />}

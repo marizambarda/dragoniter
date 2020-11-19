@@ -11,7 +11,7 @@ api.addRequestTransform((request) => {
   }
 
   // simula delay
-  // request.headers['delay'] = 1000
+  request.headers['delay'] = 1000;
 });
 
 export default api;

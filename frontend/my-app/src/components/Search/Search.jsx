@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import qs from 'qs';
 import './Search.scss';
 
-function Search() {
+function Search({ onSubmit }) {
   const history = useHistory();
   const [term, setTerm] = useState('');
 
@@ -17,8 +17,8 @@ function Search() {
 
   async function formSubmitted(e) {
     e.preventDefault();
-    history.push(`/search?term=${term}`);
-    window.location.reload();
+    onSubmit(term);
+    //window.location.reload();
   }
 
   return (
@@ -26,18 +26,22 @@ function Search() {
       <Form onSubmit={formSubmitted}>
         <Form.Row className="align-items-center">
           <Col lg={{ offset: 6 }}>
-            <Form.Control
-              className="mb-2"
-              id="inlineFormInput"
-              placeholder="Pesquisa"
-              value={term}
-              onChange={(e) => setTerm(e.target.value)}
-            />
-          </Col>
-          <Col lg={1}>
-            <Button type="submit" className="mb-2">
-              <FontAwesomeIcon icon={faSearch} />
-            </Button>
+            <div style={{ display: 'flex' }}>
+              <Form.Control
+                className="mb-2"
+                id="inlineFormInput"
+                placeholder="Pesquisa"
+                value={term}
+                onChange={(e) => setTerm(e.target.value)}
+              />
+              <Button
+                style={{ marginLeft: '10px' }}
+                type="submit"
+                className="mb-2"
+              >
+                <FontAwesomeIcon icon={faSearch} />
+              </Button>
+            </div>
           </Col>
         </Form.Row>
       </Form>
