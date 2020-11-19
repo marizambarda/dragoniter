@@ -3,12 +3,14 @@ import api from '../../api';
 import { Form, Button } from 'react-bootstrap';
 import { useAppContext } from '../../AppContext';
 import LoadingIndicator from '../LoadingIndicator';
+import ProfileImage from '../../components/ProfileImage';
 import './CreatePostForm.scss';
 
-function CreatePostForm({ defaultText, buttonText }) {
+function CreatePostForm({ defaultText, buttonText, showUserAvatar }) {
   const { loggedUser } = useAppContext();
   const [postBody, setPostBody] = useState(defaultText);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const autoFocus = useCallback((el) => {
     if (el) {
@@ -27,10 +29,17 @@ function CreatePostForm({ defaultText, buttonText }) {
   return (
     <div className="createPostForm">
       <Form className="clearfix" onSubmit={formSubmited}>
-        <Form.Group>
-          <Form.Control
+        <div
+          className={`informationCreatePostForm ${isFocused ? 'focus' : ''}`}
+        >
+          {showUserAvatar && (
+            <ProfileImage
+              src={loggedUser && loggedUser.avatar_url}
+              className="profileImageForm"
+            />
+          )}
+          <textarea
             className="texteareaTimeline"
-            as="textarea"
             ref={autoFocus}
             placeholder={
               'No que você está pensando, ' +
@@ -39,9 +48,10 @@ function CreatePostForm({ defaultText, buttonText }) {
             }
             value={postBody}
             onChange={(e) => setPostBody(e.target.value)}
-            rows={3}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
-        </Form.Group>
+        </div>
         <Button
           className="buttonSubmitPost"
           type="submit"

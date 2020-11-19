@@ -1,20 +1,10 @@
-.desktopMenu,
-.mobileMenu {
-  .perfilImage {
-    width: 90px;
-    height: 90px;
-    border: 3px solid #f0ebeb;
-    margin-bottom: 20px;
-    display: none;
-  }
-}
 .desktopMenu {
-  padding: 20px 0;
+  padding-top: 10px;
   display: none;
   .menu a {
     color: #000;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 19px;
 
     &:hover {
       color: darken(#00acee, 3%);
@@ -26,9 +16,24 @@
   height: 100px;
   border-bottom: 1px solid #ccc;
 }
-.mobileMenuHeader h1 {
+.desktopMenu .logoTwitter {
+  display: none;
+}
+.desktopMenu a.logoTwitter,
+.logoTwitter {
   color: #00acee;
-  padding-top: 25px;
+  padding-top: 10px;
+  padding-left: 10px;
+  display: inline-block;
+  font-size: 60px;
+
+  &:hover {
+    color: darken(#00acee, 3%);
+  }
+}
+.desktopMenu a.logoTwitter {
+  font-size: 45px;
+  padding-top: 0px;
 }
 .mobileMenu {
   position: fixed;
@@ -44,6 +49,9 @@
   padding-top: 90px;
 }
 
+.mobileMenu a.logoTwitter {
+  display: none;
+}
 .mobileMenu .row {
   border-top: 1px solid #666;
 }
@@ -162,11 +170,8 @@
     display: block;
   }
 
-  .desktopMenu,
-  .mobileMenu {
-    .perfilImage {
-      display: block;
-    }
+  .desktopMenu .logoTwitter {
+    display: block;
   }
   .mobileMenuIcon {
     display: none;

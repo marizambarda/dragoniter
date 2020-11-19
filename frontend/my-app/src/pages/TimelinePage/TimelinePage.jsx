@@ -30,7 +30,11 @@ function TimelinePage() {
       <PageWithMenu>
         <div className="createPostFormContainer">
           <Search onSubmit={(term) => history.push(`/search?term=${term}`)} />
-          <CreatePostForm defaultText={''} buttonText={'Twittar'} />
+          <CreatePostForm
+            showUserAvatar={true}
+            defaultText={''}
+            buttonText={'Twittar'}
+          />
         </div>
         {isLoading && <LoadingIndicator />}
         {!isLoading && (

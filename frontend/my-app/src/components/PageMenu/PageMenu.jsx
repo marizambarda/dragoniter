@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Image } from 'react-bootstrap';
 import { useAppContext } from '../../AppContext';
 import ProfileImage from '../../components/ProfileImage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import './PageMenu.scss';
 
 function PageMenu() {
@@ -41,7 +43,9 @@ function MobileMenu({ menu }) {
 
   return (
     <div className="mobileMenuHeader">
-      <h1>Twitter</h1>
+      <Link to={`/`} className="logoTwitter">
+        <FontAwesomeIcon icon={faTwitter} />
+      </Link>
       <a
         href="#"
         onClick={toggleMenu}
@@ -72,8 +76,8 @@ function LoggedInMenu() {
 
   return (
     <>
-      <Link to={`/${loggedUser.nickname}`}>
-        <ProfileImage className="perfilImage" src={loggedUser.avatar_url} />
+      <Link to={`/`} className="logoTwitter">
+        <FontAwesomeIcon icon={faTwitter} />
       </Link>
       <Row>
         <Col>

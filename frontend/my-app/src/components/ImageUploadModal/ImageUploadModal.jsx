@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import api from '../../api';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import './ImageUploadModal.scss';
 
 function ImageUploadModal({ show, handleClose, userFieldName }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +48,7 @@ function ImageUploadModal({ show, handleClose, userFieldName }) {
           {userFieldName === 'cover_url' && 'Alterar imagem da capa'}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="chageImages">
         <Form>
           <Form.Group>
             <Form.File

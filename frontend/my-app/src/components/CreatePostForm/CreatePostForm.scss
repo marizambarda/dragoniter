@@ -1,12 +1,33 @@
 .createPostForm {
+  .informationCreatePostForm {
+    display: flex;
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 100px;
+    margin: 10px 0;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    &.focus {
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      border-color: #80bdff;
+    }
+  }
   .buttonSubmitPost {
     float: right;
     margin-bottom: 15px;
   }
-  .teste {
-    margin-top: 50px;
+  .profileImageForm {
+    width: 50px;
+    height: 50px;
   }
   .texteareaTimeline {
-    margin-top: 30px;
+    display: block;
+    flex: 1;
+    height: 80px;
+    border: 0;
+    outline: none;
+    resize: none;
+    margin-left: 10px;
   }
 }
