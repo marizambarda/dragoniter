@@ -3,7 +3,13 @@
     margin-bottom: 20px;
     padding: 0 20px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+
+    // no computador, deixa informações de seguidores na lateral
+    @media (min-width: 992px) {
+      align-items: center;
+      flex-direction: row;
+    }
   }
   .userIdentification {
     flex-grow: 1;
@@ -32,6 +38,10 @@
     margin-top: -70px;
     margin-left: 20px;
     position: relative;
+  }
+  .profileFollowingInformation {
+    display: flex;
+    align-items: center;
   }
   .editAvatarButton {
     border-radius: 100%;

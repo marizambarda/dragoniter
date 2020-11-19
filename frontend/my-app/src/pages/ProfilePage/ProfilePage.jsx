@@ -161,27 +161,29 @@ function ProfileHeaderUserInformation({ user }) {
 
         <div className="profileUserNickname">@{user.nickname}</div>
       </div>
-      <div className="following">
-        <Link className="follow" to={`/${user.nickname}/following`}>
-          {user.following} Seguindo{' '}
-        </Link>
-      </div>
-      <div className="followers">
-        <Link className="follow" to={`/${user.nickname}/followers`}>
-          {user.followers} Seguidores{' '}
-        </Link>
-      </div>
-      <div className="buttons">
-        {loggedUser && !isMe(user) && !user.followedByMe && (
-          <Button variant="secondary" onClick={follow} disabled={isLoading}>
-            {isLoading ? <LoadingIndicator small /> : 'Seguir'}
-          </Button>
-        )}
-        {!isMe(user) && user.followedByMe && (
-          <Button variant="primary" onClick={unFollow} disabled={isLoading}>
-            {isLoading ? <LoadingIndicator small /> : 'Seguindo'}
-          </Button>
-        )}
+      <div className="profileFollowingInformation">
+        <div className="following">
+          <Link className="follow" to={`/${user.nickname}/following`}>
+            {user.following} Seguindo{' '}
+          </Link>
+        </div>
+        <div className="followers">
+          <Link className="follow" to={`/${user.nickname}/followers`}>
+            {user.followers} Seguidores{' '}
+          </Link>
+        </div>
+        <div className="buttons">
+          {loggedUser && !isMe(user) && !user.followedByMe && (
+            <Button variant="secondary" onClick={follow} disabled={isLoading}>
+              {isLoading ? <LoadingIndicator small /> : 'Seguir'}
+            </Button>
+          )}
+          {!isMe(user) && user.followedByMe && (
+            <Button variant="primary" onClick={unFollow} disabled={isLoading}>
+              {isLoading ? <LoadingIndicator small /> : 'Seguindo'}
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );
