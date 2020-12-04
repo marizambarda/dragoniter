@@ -33,7 +33,7 @@ function TimelinePage() {
           <CreatePostForm
             showUserAvatar={true}
             defaultText={''}
-            buttonText={'Twittar'}
+            buttonText={'Postar'}
           />
         </div>
         {isLoading && <LoadingIndicator />}
@@ -42,7 +42,7 @@ function TimelinePage() {
             <PostsList posts={posts} />
             {posts.lenght === 0 && (
               <div className="doesntHaveInformation">
-                Você ainda não possui twiites, siga outros usuários ou twitte
+                Você ainda não possui twiites, siga outros usuários ou poste
                 algo.
               </div>
             )}

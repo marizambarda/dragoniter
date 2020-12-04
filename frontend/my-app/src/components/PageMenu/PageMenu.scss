@@ -16,11 +16,11 @@
   height: 100px;
   border-bottom: 1px solid #ccc;
 }
-.desktopMenu .logoTwitter {
+.desktopMenu .logoDragoniter {
   display: none;
 }
-.desktopMenu a.logoTwitter,
-.logoTwitter {
+.desktopMenu a.logoDragoniter,
+.logoDragoniter {
   color: #00acee;
   padding-top: 10px;
   padding-left: 10px;
@@ -31,7 +31,7 @@
     color: darken(#00acee, 3%);
   }
 }
-.desktopMenu a.logoTwitter {
+.desktopMenu a.logoDragoniter {
   font-size: 45px;
   padding-top: 0px;
 }
@@ -49,7 +49,7 @@
   padding-top: 90px;
 }
 
-.mobileMenu a.logoTwitter {
+.mobileMenu a.logoDragoniter {
   display: none;
 }
 .mobileMenu .row {
@@ -170,7 +170,7 @@
     display: block;
   }
 
-  .desktopMenu .logoTwitter {
+  .desktopMenu .logoDragoniter {
     display: block;
   }
   .mobileMenuIcon {

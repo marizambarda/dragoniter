@@ -31,7 +31,7 @@ function Post({ post }) {
     setReply(!reply);
   }
 
-  async function deleteTwitte() {
+  async function deletePost() {
     if (window.confirm(`Tem certeza que deseja deletar?`)) {
       setIsLoading(true);
       await api.delete(`/post/${post.id}`);
@@ -81,7 +81,7 @@ function Post({ post }) {
             disabled={isLoading}
             className="btnDeletePost"
             variant="light"
-            onClick={deleteTwitte}
+            onClick={deletePost}
           >
             {!isLoading && <FontAwesomeIcon icon={faTrashAlt} />}
             {isLoading && <LoadingIndicator small />}

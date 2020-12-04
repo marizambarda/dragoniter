@@ -54,11 +54,13 @@ function ProfilePage() {
               <div className="doesntHaveInformation">
                 {isMe(user) && (
                   <div>
-                    Você ainda não possui twitts!{' '}
-                    <Link to={'/'}>Clique aqui para twittar</Link>
+                    Você ainda não possui dragoneets!{' '}
+                    <Link to={'/'}>Clique aqui para dragonitar</Link>
                   </div>
                 )}
-                {!isMe(user) && <div>Esse usuário ainda não possui twitts</div>}
+                {!isMe(user) && (
+                  <div>Esse usuário ainda não possui dragoneets</div>
+                )}
               </div>
             )}
           </div>

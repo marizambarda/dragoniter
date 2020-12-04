@@ -24,7 +24,7 @@ router.post('/forgot_password/request_code', async function (req, res) {
   await transporter.sendMail({
     text: `Código de verificação: ${code}`,
     subject: 'Código de verificação',
-    from: `Twitter <${smtp.user}>`,
+    from: `Dragoniter <${smtp.user}>`,
     to: [req.body.email]
   });
 

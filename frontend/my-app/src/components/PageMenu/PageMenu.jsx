@@ -4,7 +4,7 @@ import { Row, Col, Image } from 'react-bootstrap';
 import { useAppContext } from '../../AppContext';
 import ProfileImage from '../../components/ProfileImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faDragon } from '@fortawesome/free-solid-svg-icons';
 import './PageMenu.scss';
 
 function PageMenu() {
@@ -43,8 +43,8 @@ function MobileMenu({ menu }) {
 
   return (
     <div className="mobileMenuHeader">
-      <Link to={`/`} className="logoTwitter">
-        <FontAwesomeIcon icon={faTwitter} />
+      <Link to={`/`} className="logoDragoniter">
+        <FontAwesomeIcon icon={faDragon} />
       </Link>
       <a
         href="#"
@@ -76,8 +76,8 @@ function LoggedInMenu() {
 
   return (
     <>
-      <Link to={`/`} className="logoTwitter">
-        <FontAwesomeIcon icon={faTwitter} />
+      <Link to={`/`} className="logoDragoniter">
+        <FontAwesomeIcon icon={faDragon} />
       </Link>
       <Row>
         <Col>
