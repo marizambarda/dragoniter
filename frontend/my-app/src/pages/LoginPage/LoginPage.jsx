@@ -62,11 +62,17 @@ function LoginPage() {
               {isLoading ? ' Entrando' : 'Entrar'}
             </Button>
             <br />
-            <br />
-            <Link to="/users/signup">Não tem uma conta? Click aqui</Link>
-            <Link to="/forgotpassword" className="forgotPasswordLink">
-              Esqueci minha senha
-            </Link>
+            <div className="text-center">
+              <Link to="/forgotpassword" className="forgotPasswordLink">
+                Esqueci minha senha
+              </Link>
+              <br />
+              <br />
+              <Link to="/users/signup">
+                Não tem uma conta? Clique aqui para se cadastrar
+              </Link>
+              <br />
+            </div>
           </Form>
         </Col>
       </Row>

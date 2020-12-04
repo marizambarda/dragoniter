@@ -129,8 +129,12 @@ function SignUpPage() {
               {isLoading ? ' Carregando' : 'Cadastrar'}
             </Button>
             <br />
+            <div className="text-center">
+              <Link to="/users/login">
+                Já tem uma conta? Clique aqui para fazer login
+              </Link>
+            </div>
             <br />
-            <Link to="/users/login">Já tem uma conta? Click aqui</Link>
           </Form>
         </Col>
       </Row>
