@@ -12,11 +12,14 @@ function ImageUploadModal({ show, handleClose, userFieldName }) {
     const files = e.target.files;
     const data = new FormData();
     data.append('file', files[0]);
-    data.append('upload_preset', 'twitterprojectimages');
+    data.append(
+      'upload_preset',
+      process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+    );
     setIsLoading(true);
 
     const res = await fetch(
-      'https://api.cloudinary.com/v1_1/dw2wdlj0u/image/upload',
+      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
       {
         method: 'POST',
         body: data,
