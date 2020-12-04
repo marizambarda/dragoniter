@@ -22,7 +22,8 @@ fi
     npm install
     npm run build
   elif [ "$BUILD_ENV" = "backend" ]; then
-    echo "nada para fazer"
+    cd backend
+    npm install
   else
     echo "Error: no build config for BUILD_ENV value '$BUILD_ENV'"
     exit 1
