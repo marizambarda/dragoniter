@@ -15,6 +15,7 @@ import FollowingPage from './pages/FollowingPage';
 import FollowersPage from './pages/FollowersPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import LoadingIndicator from './components/LoadingIndicator';
+import Disclaimer from './components/Disclaimer';
 
 // Dependencies
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -77,6 +78,7 @@ function AppRouter() {
           </Switch>
         </Router>
       )}
+      <Disclaimer />
     </div>
   );
 }
