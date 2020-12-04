@@ -1,7 +1,7 @@
 import { create } from 'apisauce';
 
 const api = create({
-  baseURL: 'http://192.168.0.15:9000',
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 api.addRequestTransform((request) => {
