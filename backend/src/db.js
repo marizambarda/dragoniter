@@ -16,11 +16,6 @@ if (process.env.DATABASE_SOCKET_PATH) {
   config.socketPath = process.env.DATABASE_SOCKET_PATH;
 }
 
-const con = mysql.createConnection(config);
+const pool = mysql.createPool(config);
 
-con.connect(function (err) {
-  if (err) throw err;
-  console.log('Connected!');
-});
-
-module.exports = con.promise();
+module.exports = pool.promise();
