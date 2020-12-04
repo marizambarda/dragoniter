@@ -1,0 +1,30 @@
+#!/bin/sh -e
+
+# Based on https://gist.github.com/laugri/ba6d19f2948bd131129ec86aa1172db8#file-heroku-sh
+
+usage() {
+  echo "OVERVIEW: Build apps according to BUILD_ENV value. Meant to be used for Heroku deployment"
+  exit
+}
+
+if [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
+  usage
+fi
+
+(
+  PROJECT_ROOT="$(cd $(dirname $0)/..; pwd)"
+
+  cd $PROJECT_ROOT
+
+  if [ "$BUILD_ENV" = "frontend" ]; then
+    cd frontend/my-app
+    rm .eslintrc.json
+    npm install
+    npm run build
+  elif [ "$BUILD_ENV" = "backend" ]; then
+    echo "nada para fazer"
+  else
+    echo "Error: no build config for BUILD_ENV value '$BUILD_ENV'"
+    exit 1
+  fi
+)

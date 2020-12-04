@@ -1,0 +1,6 @@
+{
+  "engine": "10.23.0",
+  "scripts": {
+    "heroku-postbuild": "chmod +x ./scripts/heroku.build && ./scripts/heroku.build"
+  }
+}
