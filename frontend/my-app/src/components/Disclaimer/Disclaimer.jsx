@@ -18,7 +18,7 @@ function Disclaimer() {
           </a>{' '}
           - Código-fonte no{' '}
           <a
-            href="https://www.github.com/marizambarda/twitterClone"
+            href="https://www.github.com/marizambarda/dragoniter"
             target="_blank"
           >
             GitHub
