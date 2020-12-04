@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 const delay = require('express-delay-header');
 const cors = require('cors');
-const port = 9000;
+const port = process.env.PORT || 9000;
 
 app.use(express.json());
 app.use(cors());
